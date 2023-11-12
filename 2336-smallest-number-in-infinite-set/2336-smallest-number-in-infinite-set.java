@@ -2,25 +2,22 @@ class SmallestInfiniteSet {
 
     int smallest;
     PriorityQueue<Integer> pq;
-    HashSet<Integer> set;
+
     public SmallestInfiniteSet() {
-        set = new HashSet<Integer>();
         pq = new PriorityQueue<Integer>();
         smallest = 1;
     }
     
     public int popSmallest() {
         if(pq.size() > 0){
-            set.remove(pq.peek());
             return pq.poll(); 
         }
         else return smallest++;
     }
     
     public void addBack(int num) {
-        if(num < smallest && !set.contains(num)){
+        if(num < smallest && !pq.contains(num)){
             pq.offer(num);
-            set.add(num);
         }
         
     }
