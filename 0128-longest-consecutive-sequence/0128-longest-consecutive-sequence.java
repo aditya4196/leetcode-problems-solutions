@@ -10,8 +10,6 @@ class Solution {
             while(set.contains(currNum++)) count++;
             longest = Math.max(longest, count);
         }
-
         return longest;
-        
     }
 }
