@@ -6,13 +6,9 @@ class Solution {
         for(int num : nums) set.add(num);
         
         for(int num : nums){
-            if(set.contains(num-1)) continue;
-            
-            int count = 0;
-            int currNum = num;
-            while(set.contains(currNum++)){
-                count++;
-            }
+            if(set.contains(num-1)) continue; 
+            int count = 0, currNum = num;
+            while(set.contains(currNum++)) count++;
             longest = Math.max(longest, count);
         }
 
