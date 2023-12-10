@@ -4,28 +4,19 @@ class Solution:
         carry = 0
         n = len(num)
         result = []
+        i = n-1
         
-        for i in range(n-1,-1,-1):
-            print(num[i])
+        while i>=0 or k>0:
             rem = k%10
-            sum = rem + num[i] + carry
+            val = 0 if i<0 else num[i]
+            sum = rem + val + carry
             if sum > 9:
                 sum%=10
                 carry = 1
             else:
                 carry = 0
             result.insert(0,sum)
-            k//=10
-        
-        while k > 0:
-            rem = k%10
-            sum = rem + carry
-            if sum > 9:
-                sum%=10
-                carry = 1
-            else:
-                carry = 0
-            result.insert(0,sum)
+            i-=1
             k//=10
         
         if carry == 1:
