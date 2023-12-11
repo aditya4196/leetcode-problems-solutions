@@ -14,20 +14,17 @@
  * }
  */
 class Solution {
-    int result = 0;
     public int sumNumbers(TreeNode root) {
-        traversal(root, 0);
-        return result;
+        return traversal(root, 0);
     }
     
-    public void traversal(TreeNode curr, int sum){
-        if(curr == null) return;
+    public int traversal(TreeNode curr, int sum){
+        if(curr == null) return 0;
+        
         if(curr.left == null && curr.right == null){
-         result += sum*10 + curr.val;
-         return;
+         return sum*10 + curr.val;
         }
         
-        traversal(curr.left, sum*10 + curr.val);
-        traversal(curr.right, sum*10 + curr.val);
+        return traversal(curr.left, sum*10 + curr.val) + traversal(curr.right, sum*10 + curr.val);
     }
 }
