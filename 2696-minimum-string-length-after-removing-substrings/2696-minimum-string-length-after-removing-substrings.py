@@ -5,7 +5,7 @@ class Solution:
             return sub == "AB" or sub == "CD"
         
         for c in s:
-            if stack and check(str(stack[-1]+c)):
+            if stack and check(stack[-1]+c):
                 stack.pop()
             else:
                 stack.append(c)
