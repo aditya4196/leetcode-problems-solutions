@@ -1,7 +1,6 @@
 class Solution:
     def minLength(self, s: str) -> int:
         stack = []
-        
         def check(sub):
             return sub == "AB" or sub == "CD"
         
@@ -10,7 +9,7 @@ class Solution:
                 stack.pop()
             else:
                 stack.append(c)
-        print(stack)
+
         return len(stack)
             
         
