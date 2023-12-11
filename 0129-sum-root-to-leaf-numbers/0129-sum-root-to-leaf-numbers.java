@@ -25,6 +25,7 @@ class Solution {
          return sum*10 + curr.val;
         }
         
-        return traversal(curr.left, sum*10 + curr.val) + traversal(curr.right, sum*10 + curr.val);
+        return traversal(curr.left, sum*10 + curr.val) 
+            + traversal(curr.right, sum*10 + curr.val);
     }
 }
