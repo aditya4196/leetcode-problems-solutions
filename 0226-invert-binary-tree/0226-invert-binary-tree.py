@@ -17,7 +17,6 @@ class Solution:
             
             return curr
         
-        traversal(root)
-        return root
+        return traversal(root)
                 
         
