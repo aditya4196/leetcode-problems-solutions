@@ -10,7 +10,10 @@ class Solution:
         
         def backtrack(state, row, colset, ldiagset, rdiagset):
             if row == n:
-                result.append(createboard(state))
+                board = []
+                for row in state:
+                    board.append("".join(row))
+                result.append(board)
                 return
             
             for col in range(n):
@@ -24,11 +27,7 @@ class Solution:
                 backtrack(state, row+1, colset | {col}, ldiagset | {ldiag}, rdiagset | {rdiag})
                 state[row][col] = '.'
             
-                
-        
-        
-        
-        
+
         result = []
         empty_board = [["."]*n for _ in range(n)]
         backtrack(empty_board, 0, set(), set(), set())
