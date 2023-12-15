@@ -1,13 +1,6 @@
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
         
-        def createboard(state):
-            board = []
-            for row in state:
-                board.append("".join(row))
-            return board
-                    
-        
         def backtrack(state, row, colset, ldiagset, rdiagset):
             if row == n:
                 board = []
