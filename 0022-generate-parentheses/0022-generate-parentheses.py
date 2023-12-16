@@ -5,8 +5,8 @@ class Solution:
             list = []
             
             while num > 0:
-                list.append('(' if (num%2 == 0) else ')')
-                num = num//2
+                list.append(')' if (num&1) else '(')
+                num = num >> 1
             return "".join(list)
         
         def backtrack(n, opencount, closecount, num, digits):
