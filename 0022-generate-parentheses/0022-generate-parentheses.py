@@ -1,28 +1,31 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         
-        def createString(binstr):
+        def createString(num):
             list = []
-            for i in range(0,(n*2)):
-                list.append('(' if binstr[i] == '1' else ')')
+            
+            while num > 0:
+                list.append('(' if (num%2 == 0) else ')')
+                num = num//2
+            
             return "".join(list)
-                
-                
-        def backtrack(n, opencount, closecount, num):
-            if n*2 == len(str(num)):
-                output.append(createString(str(num)))
+        
+        def backtrack(n, opencount, closecount, num, digits):
+            
+            if n*2 == digits:
+                output.append(createString(num))
                 return
             
             if closecount < opencount:
-                backtrack(n, opencount, closecount+1, num*10)
+                backtrack(n, opencount, closecount+1, num << 1, digits+1)
                 
             
             if opencount < n:
-                backtrack(n, opencount+1, closecount, num*10+1)
+                backtrack(n, opencount+1, closecount, (num << 1)+1, digits+1)
             
 
         output = []
-        backtrack(n, 0, 0, 0)
+        backtrack(n, 0, 0, 0, 0)
         return output
         
         
