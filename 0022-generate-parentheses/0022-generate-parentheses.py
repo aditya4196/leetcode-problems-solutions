@@ -7,7 +7,6 @@ class Solution:
             while num > 0:
                 list.append('(' if (num%2 == 0) else ')')
                 num = num//2
-            
             return "".join(list)
         
         def backtrack(n, opencount, closecount, num, digits):
