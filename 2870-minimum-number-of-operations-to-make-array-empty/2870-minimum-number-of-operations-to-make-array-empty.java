@@ -21,8 +21,7 @@ class Solution {
         if(maxCount == 2) return freq[2];
         if(maxCount == 3) return freq[3] + freq[2];
         
-        dp[1] = 1;
-        dp[2] = dp[3] = 1;
+        dp[1] = dp[2] = dp[3] = 1;
         
         for(int i=4; i<=maxCount; i++){
             dp[i] = Math.min(dp[i-2],dp[i-3])+1;
