@@ -28,21 +28,20 @@
  */
 class Solution {
     public int depthSum(List<NestedInteger> nestedList) {
-        return backtrack(nestedList, 0, 1);
+        return backtrack(nestedList, 1);
     }
     
-    public int backtrack(List<NestedInteger> nestedList, int idx, int depth){
-        if(idx == nestedList.size()) return 0;
+    public int backtrack(List<NestedInteger> nestedList, int depth){
         
         int result = 0;
-        for(int i=idx; i<nestedList.size(); i++){
+        for(int i=0; i<nestedList.size(); i++){
             NestedInteger nobj = nestedList.get(i);
             
             if(nobj.isInteger()){
                 result += nobj.getInteger()*depth;
             }
             else{
-                result += backtrack(nobj.getList(), 0, depth+1);
+                result += backtrack(nobj.getList(), depth+1);
             }
         }
         
