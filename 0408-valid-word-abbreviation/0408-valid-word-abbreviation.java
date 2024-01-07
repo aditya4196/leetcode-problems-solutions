@@ -13,15 +13,13 @@ class Solution {
             }
             else if(Character.isDigit(a)){
                 int left = q;
-
                 if(a-'0' == 0) return false;
                 
                 while(q < abbr.length() && Character.isDigit(abbr.charAt(q))){
                     q++;
                 }
                 int num = Integer.parseInt(abbr.substring(left,q));
-                
-                System.out.println(num);
+
                 if(num > word.length()-p) return false;
                 p+=num;
             }
