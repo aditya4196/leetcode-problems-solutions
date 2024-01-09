@@ -20,13 +20,7 @@ class Solution {
         generateLeafSequence(root1, seq1);
         generateLeafSequence(root2, seq2);
         
-        if(seq1.size() != seq2.size()) return false;
-        for(int i=0; i<seq1.size(); i++){
-            if(seq1.get(i) != seq2.get(i)) return false;
-        }
-        return true;
-        
-        
+        return seq1.equals(seq2);
     }
     
     public void generateLeafSequence(TreeNode root, List<Integer> seq){
