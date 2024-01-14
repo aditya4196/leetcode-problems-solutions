@@ -17,11 +17,10 @@ class Solution {
             }
         }
         
-        //defining the zeroscount matrix, visited array, directions array
+        //defining the zeroscount matrix, directions array
         int[][] zeros = new int[grid.length][grid[0].length];
         int[][] dirs = {{0,1},{1,0},{-1,0},{0,-1}};
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
-        
+
         for(int i=0; i<zeros.length; i++){
             for(int j=0; j<zeros[0].length; j++){
                 if(grid[i][j] != 2){
@@ -36,7 +35,6 @@ class Solution {
             
             int x = curr[0];
             int y = curr[1];
-            visited[x][y] = true;
             
             for(int[] dir : dirs){
                 int newx = x + dir[0];
