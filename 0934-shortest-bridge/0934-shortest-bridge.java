@@ -4,7 +4,6 @@ class Solution {
     public int shortestBridge(int[][] grid) {
         
         //notate one island different num
-        
         queue = new LinkedList();
         boolean notated = false;
         for(int i=0; i<grid.length; i++){
@@ -18,6 +17,7 @@ class Solution {
             }
         }
         
+        //defining the zeroscount matrix, visited array, directions array
         int[][] zeros = new int[grid.length][grid[0].length];
         int[][] dirs = {{0,1},{1,0},{-1,0},{0,-1}};
         boolean[][] visited = new boolean[grid.length][grid[0].length];
@@ -30,6 +30,7 @@ class Solution {
             }
         }
 
+        //bfs to find the shortest distance from one island to other island
         while(queue.size() > 0){
             int[] curr = queue.poll();
             
@@ -41,7 +42,7 @@ class Solution {
                 int newx = x + dir[0];
                 int newy = y + dir[1];
 
-                if(newx<0 || newy<0 || newx>=grid.length || newy>=grid[0].length || visited[newx][newy]) continue;
+                if(newx<0 || newy<0 || newx>=grid.length || newy>=grid[0].length) continue;
                 
                 if(grid[newx][newy] == 1){
                     zeros[newx][newy] = zeros[x][y];
