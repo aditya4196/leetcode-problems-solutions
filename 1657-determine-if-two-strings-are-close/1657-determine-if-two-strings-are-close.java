@@ -22,7 +22,6 @@ class Solution {
         for(int i=0; i<26; i++) countMap2.put(freq[i], countMap2.getOrDefault(freq[i],0)+1);
         
         for(int val : countMap1.keySet()){
-            System.out.println(countMap1.get(val) + "-" + countMap2.get(val));
             if(val == 0) continue;
             if(countMap1.get(val) != countMap2.get(val)) return false;
         }
