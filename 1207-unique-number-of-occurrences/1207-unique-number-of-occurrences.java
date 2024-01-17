@@ -1,15 +1,17 @@
 class Solution {
     public boolean uniqueOccurrences(int[] arr) {
+        int k = 1000;
+        int[] freq = new int[2*k+1];
         
-        Map<Integer, Integer> countMap = new HashMap();
-        for(int val : arr) countMap.put(val, countMap.getOrDefault(val,0)+1);
-        
-        Set<Integer> set = new HashSet();
-        for(int count : countMap.values()){
-            if(set.contains(count)) return false;
-            set.add(count);
+        for(int val : arr){
+            freq[val+k]++;
         }
         
+        Arrays.sort(freq);
+        
+        for(int i=0; i<freq.length; i++){
+            if(i>0 && freq[i]!=0 && freq[i] == freq[i-1]) return false;
+        }
         return true;
         
     }
