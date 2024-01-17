@@ -12,9 +12,8 @@ class Solution {
         }
         
         int[] result = new int[pq.size()];
-        int i=0;
-        while(pq.size() > 0) result[i++] = pq.poll();
         
+        for(int i=0; i<k; i++) result[i] = pq.poll();
         return result;
         
 
