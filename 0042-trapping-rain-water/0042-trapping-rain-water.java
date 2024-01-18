@@ -1,39 +1,25 @@
 class Solution {
     public int trap(int[] height) {
+        int n = height.length;
+        int[] left = new int[n];
+        left[0] = height[0];
         
-        Deque<Integer> stack = new LinkedList();
-        int watercollected = 0;
-        
-        for(int i=0; i<height.length; i++){
-            while(!stack.isEmpty() && height[stack.peek()] < height[i]){
-                int popped = stack.pop();
-                if(stack.isEmpty()) break;
-                int distance = i - stack.peek() - 1;
-                int minheight = Math.min(height[i], height[stack.peek()]) - height[popped];
-                watercollected += (distance*minheight);
-            }
-            stack.push(i);
+        for(int i=1; i<n; i++){
+            left[i] = Math.max(left[i-1], height[i]);
         }
         
-        return watercollected;     
+        int maxRightHeight = height[n-1];
+        int result = 0;
+        
+        for(int i=n-1; i>=0; i--){
+            maxRightHeight = Math.max(maxRightHeight, height[i]);
+            result += Math.min(maxRightHeight, left[i]) - height[i];
+        }
+        
+        return result;
+    
+        
+        
         
     }
 }
-
-
-/*
-
- 0 1 2 3 4 5 6 7 8 9
-[0,1,0,2,1,0,1,3,2,1,2,1]
-
-curr = 3
-stack = [1]
-popped = 2
-
-dist = 1
-minheight = 0
-water collected = 0
-
-
-
-*/
