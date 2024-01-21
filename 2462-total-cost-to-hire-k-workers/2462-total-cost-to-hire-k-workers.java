@@ -8,9 +8,14 @@ class Solution {
         for (int i = 0; i < candidates; i++) {
             pqleft.add(costs[i]);
         }
-        for (int i = Math.max(candidates, n-candidates); i<n; i++) {
+        
+        //
+        for (int i = Math.max(candidates,n-candidates); i<n; i++) {
             pqright.add(costs[i]);
         }
+        
+        for(int val : pqleft) System.out.println(val);
+        for(int val : pqright) System.out.println(val);
         
         long result = 0;
         int left = candidates, right = n-candidates-1;
@@ -34,6 +39,8 @@ class Solution {
     return result;
     }  
 }
+
+//n < candidates*2
 
 /*
 
