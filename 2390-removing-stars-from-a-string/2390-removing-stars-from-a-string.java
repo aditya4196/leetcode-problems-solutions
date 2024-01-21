@@ -11,8 +11,6 @@ class Solution {
             }
         }
         
-        
-        
         for(char c : stack){
             result.append(c);    
         }
