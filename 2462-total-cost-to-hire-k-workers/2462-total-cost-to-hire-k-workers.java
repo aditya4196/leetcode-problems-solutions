@@ -17,8 +17,7 @@ class Solution {
         
 
         for(int i=0; i<k; i++){
-
-            if(pqright.isEmpty() || !pqleft.isEmpty() && pqleft.peek() <= pqright.peek()){
+            if(pqright.isEmpty() || (!pqleft.isEmpty() && pqleft.peek() <= pqright.peek())){
                 result += (long)(pqleft.poll());
                 if(left <= right){
                     pqleft.offer(costs[left++]);
@@ -44,8 +43,8 @@ cand = 4
             i
             j
  
-pq1 = 17,12,10,7
-pq2 = 11,20,8
+pqleft = 17,12,10,7
+pqright = 11,20,8
 
 2+2+7
  
