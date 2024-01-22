@@ -13,7 +13,7 @@ class Solution {
                 duplicate = Math.abs(nums[i]);
             }
         }
-        System.out.println(expectedSum + "-" + sum);
+
         return new int[]{duplicate, expectedSum-(sum-duplicate)};
         
         
