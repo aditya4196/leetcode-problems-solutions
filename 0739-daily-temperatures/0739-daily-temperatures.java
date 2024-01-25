@@ -3,7 +3,7 @@ class Solution {
         int n = temperatures.length;
         int[] result = new int[n];
         
-        Deque<Integer> stack = new LinkedList();
+        Stack<Integer> stack = new Stack<Integer>();
         
         for(int i=0; i<n; i++){
             while(!stack.isEmpty() && temperatures[stack.peek()] < temperatures[i]){
@@ -17,3 +17,11 @@ class Solution {
     }
 }
 
+/*
+
+[73, 74, 75, 71, 69, 72, 76, 73]
+ 0   1.  2.  3.  4.  5.  6.  7
+ 
+stack = []
+
+*/
