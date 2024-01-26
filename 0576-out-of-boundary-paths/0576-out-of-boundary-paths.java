@@ -10,11 +10,10 @@ class Solution {
         if(sr<0 || sc<0 || sr == m || sc == n) return 1;
         if(maxmoves == 0) return 0;
         if(memo[sr][sc][maxmoves]!=null) return memo[sr][sc][maxmoves];
-        int paths = (
-            (traverse(m,n,maxmoves-1,sr+1,sc, memo) 
+        int paths = (traverse(m,n,maxmoves-1,sr+1,sc, memo) 
             + traverse(m,n,maxmoves-1,sr-1,sc, memo))%mod
             + (traverse(m,n,maxmoves-1,sr,sc+1, memo) 
-            + traverse(m,n,maxmoves-1,sr,sc-1, memo))%mod)%mod;
+            + traverse(m,n,maxmoves-1,sr,sc-1, memo))%mod;
         return memo[sr][sc][maxmoves] = paths%mod;
     }
 }
