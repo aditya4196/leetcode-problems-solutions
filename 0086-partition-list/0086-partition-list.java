@@ -16,7 +16,6 @@ class Solution {
         ListNode left = new ListNode();
         ListNode right = new ListNode();
         ListNode leftcurr = left, rightcurr = right;
-        
         ListNode curr = head;
         
         while(curr != null){
@@ -33,9 +32,6 @@ class Solution {
         
         leftcurr.next = right.next;
         return left.next;
-        
-        
-        
     }
 }
 
@@ -43,10 +39,10 @@ class Solution {
 /*
 
 1 -> 4 -> 3 -> 2 -> 5 -> 2
-                       i  
+i  
 
-s -> 1 -> 2 -> 2
-g -> 4 -> 3 -> 5
+s -> 
+g ->
 
 
 */
