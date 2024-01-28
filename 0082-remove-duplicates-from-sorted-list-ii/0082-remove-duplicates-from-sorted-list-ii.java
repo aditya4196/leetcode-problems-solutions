@@ -30,8 +30,6 @@ class Solution {
                 curr = curr.next;
                 nextcurr = nextcurr.next;
             }
-            //if(nextcurr == null) break;
-
         }
         
         return result.next;
