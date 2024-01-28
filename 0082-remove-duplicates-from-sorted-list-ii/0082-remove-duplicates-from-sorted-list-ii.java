@@ -34,7 +34,7 @@ class Solution {
 
         }
         
-        if(result == null) return null;
+        //if(result == null) return null;
         
         return result.next;
         
