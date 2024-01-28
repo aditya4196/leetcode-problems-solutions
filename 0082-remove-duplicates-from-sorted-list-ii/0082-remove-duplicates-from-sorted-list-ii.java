@@ -18,7 +18,7 @@ class Solution {
         ListNode curr = result;
         ListNode nextcurr = head;
         
-        while(nextcurr.next != null){
+        while(nextcurr != null){
             if(nextcurr.next!=null && nextcurr.val == nextcurr.next.val){
                 while(nextcurr.next!=null && nextcurr.val == nextcurr.next.val){
                     nextcurr = nextcurr.next;
@@ -30,11 +30,9 @@ class Solution {
                 curr = curr.next;
                 nextcurr = nextcurr.next;
             }
-            if(nextcurr == null) break;
+            //if(nextcurr == null) break;
 
         }
-        
-        //if(result == null) return null;
         
         return result.next;
         
