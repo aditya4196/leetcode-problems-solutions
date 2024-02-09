@@ -20,9 +20,7 @@ class Solution {
         List<Integer> result = new ArrayList();
         Deque<TreeNode> queue = new LinkedList();
 
-        int level = 0;
         queue.offer(root);
-        
         int rightVal = root.val;
         
         while(queue.size() > 0){
