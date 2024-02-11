@@ -1,30 +1,27 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
-        Set<Integer> set = new HashSet<Integer>();
-        List<List<Integer>> result = new ArrayList();
         
-        backtrack(nums, set, new ArrayList<Integer>(), result);
+        List<List<Integer>> result = new ArrayList();
+        backtrack(nums, 0, new ArrayList<Integer>(), result);
         return result;
     }
     
-    public void backtrack(int[] nums, Set<Integer> set, List<Integer> inter, List<List<Integer>> result){
-        if(inter.size() == nums.length){
-            result.add(new ArrayList<Integer>(inter));
+    public void backtrack(int[] nums, int idx, List<Integer> inter, List<List<Integer>> result){
+        if(idx >= nums.length){
+            result.add(new ArrayList<Integer>(Arrays.stream(nums).boxed().toList()));
             return;
         }
         
-        for(int num : nums){
-            if(!set.contains(num)){
-                set.add(num);
-                inter.add(num);
-                backtrack(nums, set, inter, result);
-                inter.remove(inter.size()-1);
-                set.remove(num);
-            }
+        for(int i=idx; i<nums.length; i++){
+            swap(nums, idx, i);
+            backtrack(nums, idx+1, inter, result);
+            swap(nums, i, idx);
         }
-    } 
+    }
+    
+    public void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
 }
-
-
-/*
-*/
