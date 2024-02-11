@@ -1,25 +1,30 @@
 class Solution {
-    List<List<Integer>> output = new ArrayList();
     public List<List<Integer>> permute(int[] nums) {
-        recursion(nums, new ArrayList<Integer>(), new HashSet<Integer>());
-        return output;
+        Set<Integer> set = new HashSet<Integer>();
+        List<List<Integer>> result = new ArrayList();
+        
+        backtrack(nums, set, new ArrayList<Integer>(), result);
+        return result;
     }
-
-    public void recursion(int[] nums, List<Integer> inner, Set<Integer> present){
-        if(inner.size() == nums.length){
-            output.add(new ArrayList<Integer>(inner));
+    
+    public void backtrack(int[] nums, Set<Integer> set, List<Integer> inter, List<List<Integer>> result){
+        if(inter.size() == nums.length){
+            result.add(new ArrayList<Integer>(inter));
             return;
         }
-
-        for(int i=0; i<nums.length; i++){
-            if(!present.contains(nums[i])){
-                inner.add(nums[i]);
-                present.add(nums[i]);
-                recursion(nums, inner, present);
-                present.remove(nums[i]);
-                inner.remove(inner.size()-1);
+        
+        for(int num : nums){
+            if(!set.contains(num)){
+                set.add(num);
+                inter.add(num);
+                backtrack(nums, set, inter, result);
+                inter.remove(inter.size()-1);
+                set.remove(num);
             }
         }
-
-    }
+    } 
 }
+
+
+/*
+*/
