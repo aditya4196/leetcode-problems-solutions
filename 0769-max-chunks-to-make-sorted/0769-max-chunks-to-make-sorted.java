@@ -1,14 +1,23 @@
 class Solution {
     public int maxChunksToSorted(int[] arr) {
         int n = arr.length;
-        int maxVal = -1, result = 0;
+        Deque<Integer> stack = new LinkedList();
         
         for(int i=0; i<n; i++){
-            maxVal = Math.max(maxVal, arr[i]);
-            if(maxVal == i) result++;
+            Integer maxVal = -1;
+            while(!stack.isEmpty() && stack.peek() > arr[i]){
+                maxVal = Math.max(maxVal, stack.pop());
+            }
+            if(maxVal != -1){
+                stack.push(maxVal);
+            }
+            else stack.push(arr[i]);
         }
         
-        return result;
+        
+        return stack.size();
+       
+        
     }
 }
 
