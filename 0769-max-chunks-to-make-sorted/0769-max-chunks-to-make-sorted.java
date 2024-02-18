@@ -4,16 +4,12 @@ class Solution {
         Deque<Integer> stack = new LinkedList();
         
         for(int i=0; i<n; i++){
-            Integer maxVal = -1;
+            int maxVal = -1;
             while(!stack.isEmpty() && stack.peek() > arr[i]){
                 maxVal = Math.max(maxVal, stack.pop());
             }
-            if(maxVal != -1){
-                stack.push(maxVal);
-            }
-            else stack.push(arr[i]);
+            stack.push((maxVal == -1)?(arr[i]):(maxVal));
         }
-        
         
         return stack.size();
        
@@ -27,8 +23,7 @@ class Solution {
 
 4 3 2 1 0
 
-4 4 4 4 4
-        0
+stack = [4]
 
 
 
