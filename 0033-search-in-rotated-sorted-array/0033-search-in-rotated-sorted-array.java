@@ -11,7 +11,6 @@ class Solution {
         }
         else return binarySearch(0, startIndex-1, nums, target);
 
-        
     }
 
     public int binarySearch(int left, int right, int[] nums, int target){
