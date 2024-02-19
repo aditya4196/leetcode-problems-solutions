@@ -1,68 +1,71 @@
-public class Solution {
-    public void fillRowsLeft(int[][] matrix, int i, int j) {
-        while (i >= 0) {
-            if (matrix[i][j] != 0) {
-                matrix[i][j] = 100001;
-            }
-            i--;
-        }
-    }
-
-    public void fillRowsRight(int[][] matrix, int i, int j) {
-        while (i < matrix.length) {
-            if (matrix[i][j] != 0) {
-                matrix[i][j] = 100001;
-            }
-            i++;
-        }
-    }
-
-    public void fillColumnUp(int[][] matrix, int i, int j) {
-        while (j >= 0) {
-            if (matrix[i][j] != 0) {
-                matrix[i][j] = 100001;
-            }
-            j--;
-        }
-    }
-
-    public void fillColumnDown(int[][] matrix, int i, int j) {
-        while (j < matrix[0].length) {
-            if (matrix[i][j] != 0) {
-                matrix[i][j] = 100001;
-            }
-            j++;
-        }
-    }
-
-    public void dfs(int[][] matrix, int i, int j) {
-        if (i < 0 || j < 0 || i >= matrix.length || j >= matrix[0].length) {
-            return;
-        }
-        fillColumnDown(matrix, i, j);
-        fillColumnUp(matrix, i, j);
-        fillRowsLeft(matrix, i, j);
-        fillRowsRight(matrix, i, j);
-    }
-
+class Solution {
     public void setZeroes(int[][] matrix) {
-        int rows = matrix.length;
-        int columns = matrix[0].length;
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (matrix[i][j] == 0) {
-                    dfs(matrix, i, j);
-                }
+        
+        int m = matrix.length, n = matrix[0].length;
+        boolean firstRow = false, firstCol = false;
+        
+        //firstrow and firstcol check
+        for(int i=0; i<n; i++){
+            if(matrix[0][i] == 0){
+                firstRow = true;
+                break;
             }
         }
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (matrix[i][j] == 100001) {
-                    matrix[i][j] = 0;
-                }
+        //firstrow and firstcol check
+        for(int i=0; i<m; i++){
+            if(matrix[i][0] == 0){
+                firstCol = true;
+                break;
             }
         }
+        
+        //rest fills    
+        for(int i=1; i<m; i++){
+         for(int j=1; j<n; j++){
+             if(matrix[i][j] == 0){
+                 matrix[i][0] = 0;
+                 matrix[0][j] = 0;
+             }
+          }
+        }
+        
+        for(int i=1; i<m; i++){
+         for(int j=1; j<n; j++){
+             if(matrix[i][0] == 0 || matrix[0][j] == 0){
+                 matrix[i][j] = 0;
+             }
+          }
+        }
+        
+        if(firstRow){
+            for(int i=0; i<n; i++) matrix[0][i] = 0;
+        }
+        if(firstCol){
+            for(int i=0; i<m; i++) matrix[i][0] = 0;
+        }
+        
+        
+        
     }
 }
+
+
+/*
+
+1 0 0
+0 0 1
+1 1 1
+
+frow = true
+fcol = false
+
+
+0 0 0
+0 0 0
+1 0 0
+
+
+
+
+*/
