@@ -11,8 +11,7 @@ class Solution {
             suffix = new StringBuilder();
             prefix = new StringBuilder();
             String word = words[i];
-            
-            System.out.println("Iteration - " + i);
+
             int j=0; 
             int k=word.length()-1;
             
@@ -20,10 +19,8 @@ class Solution {
                 suffix.append(word.charAt(k));
                 prefix.append(word.charAt(j));
                 
-                System.out.println(reverse(suffix.toString()) + "-" + prefix.toString());
                 
                 if(prefix.toString().equals(reverse(suffix.toString())) && map.containsKey(prefix.toString())){
-                        System.out.println("count incr");
                         pairCount+=(map.get(prefix.toString()));
                 }
                 j++;
