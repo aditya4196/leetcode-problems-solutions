@@ -37,9 +37,6 @@ class Solution {
             }
             minutes++;
         }
-        
-        System.out.println(fresh);
-        
         return (fresh == 0)?minutes:-1;
         
     }
