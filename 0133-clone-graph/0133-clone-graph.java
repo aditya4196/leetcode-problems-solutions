@@ -22,8 +22,7 @@ class Solution {
     Map<Node, Node> oldToNewMap = new HashMap();
     
     public Node cloneGraph(Node node) {
-        dfs(node, oldToNewMap); 
-        return oldToNewMap.get(node);
+        return dfs(node, oldToNewMap); 
     }
     
     public Node dfs(Node node, Map<Node, Node> nodeMap){
