@@ -19,27 +19,40 @@ class Node {
 */
 
 class Solution {
-    Map<Node, Node> oldNewMap = new HashMap();
+    Map<Node, Node> oldToNewMap = new HashMap();
+    
     public Node cloneGraph(Node node) {
-        return helper(node, oldNewMap);
-        
+        dfs(node, oldToNewMap); 
+        return oldToNewMap.get(node);
     }
     
-    public Node helper(Node node, Map<Node, Node> oldNewMap){
+    public Node dfs(Node node, Map<Node, Node> nodeMap){
         if(node == null) return null;
-        
-        Node newnode = new Node(node.val);
-        oldNewMap.put(node, newnode);
+        Node newNode = new Node(node.val);
+        nodeMap.put(node, newNode);
         
         for(Node neighbor : node.neighbors){
-            if(oldNewMap.containsKey(neighbor)){
-                Node newneighbor = oldNewMap.get(neighbor);
-                newnode.neighbors.add(newneighbor);
+            if(nodeMap.containsKey(neighbor)){
+                newNode.neighbors.add(nodeMap.get(neighbor));
             }
-            else{
-                newnode.neighbors.add(helper(neighbor, oldNewMap));
-            }
+            else newNode.neighbors.add(dfs(neighbor, nodeMap));
         }
-        return oldNewMap.get(node);
+        
+        return newNode;
     }
 }
+
+
+/*
+
+newnode(0) -> 
+
+
+
+
+
+
+
+
+
+*/
