@@ -1,25 +1,44 @@
 class Solution {
     public int trap(int[] height) {
-        int n = height.length;
-        int[] left = new int[n];
-        left[0] = height[0];
         
-        for(int i=1; i<n; i++){
-            left[i] = Math.max(left[i-1], height[i]);
+        //container with most water concept
+        int leftMax = 0, rightMax = 0;
+        int left = 0, right = height.length-1;
+        int waterTrapped = 0;
+        
+        while(left < right){
+            if(height[left] > height[right]){
+                if(rightMax <= height[right]){
+                    rightMax = height[right];
+                }
+                else waterTrapped += rightMax - height[right];
+                right--;
+            }
+            else{
+                if(leftMax <= height[left]){
+                    leftMax = height[left];
+                }
+                else waterTrapped += leftMax - height[left];
+                left++;
+            }
         }
         
-        int maxRightHeight = height[n-1];
-        int result = 0;
+        return waterTrapped;
         
-        for(int i=n-1; i>=0; i--){
-            maxRightHeight = Math.max(maxRightHeight, height[i]);
-            result += Math.min(maxRightHeight, left[i]) - height[i];
-        }
         
-        return result;
-    
         
         
         
     }
 }
+
+/*
+
+O(n)
+[0,1,0,2,1,0,1,3,2,1,2,1]
+[0,1,1,2,2,2,2,3,3,3,3,3]
+[3,3,3,3,3,3,3,3,2,2,2,1]
+
+
+right = 1
+*/
