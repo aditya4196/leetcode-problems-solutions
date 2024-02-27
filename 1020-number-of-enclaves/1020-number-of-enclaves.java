@@ -20,7 +20,6 @@ class Solution {
         int count = 0;
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
-                System.out.println(invalid[i][j] + "-" + grid[i][j]);
                 count += (invalid[i][j])?0:grid[i][j];
             }
         }
