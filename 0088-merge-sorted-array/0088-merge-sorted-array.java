@@ -12,3 +12,12 @@ class Solution {
         
     }
 }
+/*
+
+
+nums1 = [1 2 3 3 5 6]
+         i
+nums2 = [2 5 6]
+         j
+
+*/
