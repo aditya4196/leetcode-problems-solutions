@@ -35,7 +35,6 @@ class Solution {
         }
         
         endTime[curr] = time++; 
-        System.out.println(curr + "-" + startTime[curr] + "-" + endTime[curr]);
         return false;
     }
     
