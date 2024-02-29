@@ -1,47 +1,41 @@
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
-        if(nums==null || nums.length==0) return null;
-
         Arrays.sort(nums);
-        List<List<Integer>> output = new ArrayList<>(); 
-        kSum(nums, target, 4, 0, new ArrayList<>(), output);
-        return output;
+        List<List<Integer>> result = new ArrayList();
+        kSum(nums, 0, target, 4, new ArrayList<Integer>(), result);
+        return result;
         
     }
-
-
-    void kSum(int[] nums, long target, int k, int start, List<Integer> tempOutput, List<List<Integer>> output) {
-        
-        if(k==2) {
-            int left=start;
-            int right = nums.length-1;
-            while(left<right) {
-                long diff = target-nums[left];
-                if(diff==nums[right]) {
-                        List<Integer> temp = new ArrayList<>(tempOutput);
-                        temp.add(nums[left]);
-                        temp.add(nums[right]);
-                        output.add(temp);
-                        left++;
-                        right--;
-                        //while(left<right && nums[left]==nums[left-1]) left++;
-                        while(left<right && nums[right]==nums[right+1]) right--;
-                } else if (diff<nums[right]) {
-                    right--;
-                } else {
+    
+    public void kSum(int[] nums, int start, long target, int k, List<Integer> quad, List<List<Integer>> result){
+        if(k < 2) return;
+        else if(k == 2){
+            //twosum
+            int left = start, right = nums.length-1;
+            while(left < right){
+                long sum = nums[left] + nums[right];
+                if(sum == target){
+                    quad.add(nums[left]);
+                    quad.add(nums[right]);
+                    result.add(new ArrayList<Integer>(quad));
+                    quad.remove(quad.size()-1);
+                    quad.remove(quad.size()-1);
                     left++;
+                    right--;
+                    while(left < right && nums[left] == nums[left-1]) left++;
                 }
-            } 
+                else if(sum > target) right--;
+                else left++;
+            }
+            
             return;
         }
-
-        for(int index=start; index<=nums.length-k;index++) {
-            if(index!=start && nums[index]==nums[index-1]) continue;
-            tempOutput.add(nums[index]);
-            kSum(nums, target-nums[index], k-1, index+1, tempOutput, output);
-            tempOutput.remove(tempOutput.size()-1);
+        
+        for(int i=start; i<nums.length; i++){
+             if(i > start && nums[i] == nums[i-1]) continue;
+             quad.add(nums[i]);
+             kSum(nums, i+1, target-nums[i], k-1, quad, result);
+             quad.remove(quad.size()-1);
         }
-
-
     }
 }
