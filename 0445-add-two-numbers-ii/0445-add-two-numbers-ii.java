@@ -10,48 +10,44 @@
  */
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-
-        ListNode rl1 = reverseList(l1);
-        ListNode rl2 = reverseList(l2);
-
-        ListNode output = new ListNode(-1);
-        ListNode dummy = output;
-
-        int carry=0;
-        while(rl1!=null || rl2!=null){
-            int sum = ((rl1 != null)?rl1.val:0) + ((rl2 != null)?rl2.val:0) + carry;
-
-            if(sum > 9){
-                sum %= 10;
-                carry = 1;
-            }
+        
+        ListNode newl1 = reverse(l1);
+        ListNode newl2 = reverse(l2);
+        
+        ListNode result = new ListNode();
+        ListNode dummy = result;
+        int carry = 0;
+        
+        while(newl1!=null || newl2!=null){
+            int val1 = (newl1 == null)?0:newl1.val;
+            int val2 = (newl2 == null)?0:newl2.val;
+            int sum = val1 + val2 + carry;
+            
+            if(sum > 9) carry = 1;
             else carry = 0;
+            sum%=10;
+            
             dummy.next = new ListNode(sum);
             dummy = dummy.next;
-
-            rl1 = (rl1!=null)?rl1.next:rl1;
-            rl2 = (rl2!=null)?rl2.next:rl2;
+            newl1 = (newl1 == null)?newl1:newl1.next;
+            newl2 = (newl2 == null)?newl2:newl2.next;
         }
-        if(carry == 1){
-            dummy.next = new ListNode(1);
-        }
-        dummy = dummy.next;
-
-        return reverseList(output.next);
-    
+        
+        if(carry == 1) dummy.next = new ListNode(1);
+        
+        return reverse(result.next);
         
     }
-
-    public ListNode reverseList(ListNode node){
-        if(node == null || node.next == null) return node;
-        ListNode curr = node, nextcurr = null, prev = null;
-
+    
+    public ListNode reverse(ListNode curr){
+        ListNode nextcurr = null, start = null;
+        
         while(curr!=null){
             nextcurr = curr.next;
-            curr.next = prev;
-            prev = curr;
+            curr.next = start;
+            start = curr;
             curr = nextcurr;
         }
-        return prev;
+        return start;
     }
 }
