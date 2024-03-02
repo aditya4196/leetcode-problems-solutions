@@ -10,12 +10,10 @@ class Solution {
     
     public int recursive(int[] nums, int idx, Integer[] memo){
         if(idx == nums.length-1) return 0;
-        
         if(nums[idx] == 0) return nums.length+1;
-        
         if(memo[idx]!=null) return memo[idx];
         
-        int minSteps = Integer.MAX_VALUE;
+        int minSteps = nums.length+1;
         
         for(int i=idx+1; i<=Math.min(nums.length-1, idx+nums[idx]); i++){
             int totalSteps = 1 + recursive(nums, i, memo);
