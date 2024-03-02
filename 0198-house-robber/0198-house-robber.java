@@ -1,30 +1,14 @@
 class Solution {
     public int rob(int[] nums) {
+        return recursive(nums, nums.length-1, new Integer[nums.length]);
+    }
+    
+    public int recursive(int[] nums, int i ,Integer[] dp){
+        if(i == 0) return nums[0];
+        if(i == 1) return Math.max(nums[0], nums[1]);
+        if(dp[i]!=null) return dp[i];
         
-        int n = nums.length;
-        if(n == 1) return nums[0];
-        else if(n == 2) return Math.max(nums[0], nums[1]);
-        
-        int[] dp = new int[n];
-        dp[0] = nums[0];
-        dp[1] = Math.max(nums[0], nums[1]);
-        
-        for(int i=2; i<n; i++){
-            dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i]);
-        }
-        
-        return dp[n-1];
-        
-        
+        return dp[i] = Math.max(recursive(nums, i-1, dp), nums[i] + recursive(nums, i-2, dp));
         
     }
 }
-
-
-/*
-
-1,2,3,1
-
-
-
-*/
