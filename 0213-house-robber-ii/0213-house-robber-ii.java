@@ -1,26 +1,18 @@
 class Solution {
     public int rob(int[] nums) {
-        int n = nums.length;
+        int n =nums.length;
         if(n == 1) return nums[0];
         if(n == 2) return Math.max(nums[0], nums[1]);
-        return Math.max(helper(nums, 0, n-2), helper(nums, 1, n-1));
         
+        return Math.max(recursive(nums, 0, n-2, new Integer[n]), recursive(nums, 1, n-1, new Integer[n]));
     }
     
-    public int helper(int[] nums, int start, int end){
-        if(start == end) return nums[start];
-        if((end-start) == 1) return Math.max(nums[start], nums[end]);
+    public int recursive(int[] nums, int start, int end, Integer[] memo){
+        if(end == start) return nums[start];
+        if(end == start+1) return Math.max(nums[start], nums[start+1]);
+        if(memo[end]!=null) return memo[end];
         
-        int firstHouse = nums[start];
-        int secondHouse = Math.max(nums[start],nums[start+1]);
-        int currHouse = 0;
+        return memo[end] = Math.max(recursive(nums, start, end-1, memo), nums[end] + recursive(nums, start, end-2, memo));
         
-        for(int i=start+2; i<=end; i++){
-            currHouse = Math.max(nums[i]+firstHouse, secondHouse);
-            firstHouse = secondHouse;
-            secondHouse = currHouse;
-        }
-        
-        return currHouse;
     }
 }
