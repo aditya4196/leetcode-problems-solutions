@@ -28,35 +28,17 @@
  */
 class Solution {
     public int depthSum(List<NestedInteger> nestedList) {
-        return backtrack(nestedList, 1);
+        return dfs(nestedList, 1);
     }
     
-    public int backtrack(List<NestedInteger> nestedList, int depth){
+    public int dfs(List<NestedInteger> list, int depth){
         
-        int result = 0;
-        for(int i=0; i<nestedList.size(); i++){
-            NestedInteger nobj = nestedList.get(i);
-            
-            if(nobj.isInteger()){
-                result += nobj.getInteger()*depth;
-            }
-            else{
-                result += backtrack(nobj.getList(), depth+1);
-            }
+        int sum = 0;
+        for(int i=0; i<list.size(); i++){
+            if(list.get(i).isInteger()) sum += (list.get(i).getInteger()*depth);
+            else sum += dfs(list.get(i).getList(), depth+1);
         }
+        return sum;
         
-        return result;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
