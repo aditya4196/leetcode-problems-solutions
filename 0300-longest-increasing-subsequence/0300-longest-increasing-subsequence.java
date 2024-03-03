@@ -1,31 +1,31 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
-        
-        int n = nums.length;
-        ArrayList<Integer> stack = new ArrayList();
-        
-        for(int i=0; i<n; i++){
-            int idx = bsearch(stack,nums[i]);
-            if(idx == stack.size()) stack.add(nums[i]);
-            else{
-                stack.set(idx, nums[i]);
-            }
-        }
-        
-        return stack.size();
-        
+        Integer[][] dp = new Integer[nums.length][nums.length+1];
+        return topDown(nums, 0, -1, dp);
     }
     
-    public int bsearch(ArrayList<Integer> stack, int target){
-        int left = 0, right = stack.size();
-        while(left < right){
-            int mid = left + (right-left)/2;
-            if(target == stack.get(mid)) return mid;
-            else if(target > stack.get(mid)){
-                left = mid+1;
-            }
-            else right = mid;
+    public int topDown(int[] nums, int idx, int prev, Integer[][] dp){
+        if(idx == nums.length) return 0;
+        if(dp[idx][prev+1]!=null) return dp[idx][prev+1];
+        
+        if(prev!=-1 && nums[prev] >= nums[idx]){
+            return dp[idx][prev+1] = topDown(nums, idx+1, prev, dp);
         }
-        return left;
+        
+        return dp[idx][prev+1] = Math.max(1 + topDown(nums, idx+1, idx, dp), topDown(nums, idx+1, prev, dp));
     }
 }
+
+/*
+
+10,9,2,5,3,7,101,18
+
+                10
+                
+       null,10         null,9
+     
+    10,101.  10,18
+    
+
+
+*/
