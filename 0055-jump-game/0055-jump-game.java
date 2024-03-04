@@ -1,30 +1,30 @@
 class Solution {
     public boolean canJump(int[] nums) {
-        
         int n = nums.length;
-        Boolean[] memo = new Boolean[n];
-        memo[n-1] = true;
+        boolean[] reachable = new boolean[n];
+        reachable[n-1] = true;
         
-        return recursive(nums, 0, memo);
-    }
-    
-    public boolean recursive(int[] nums, int idx, Boolean[] memo){
-        if(idx == nums.length-1) return true;
-        if(nums[idx] == 0) return false;
-        if(memo[idx]!=null) return memo[idx];
-        
-        boolean reachable = false;
-        
-        for(int i=idx+1; i<= Math.min(nums.length-1, idx + nums[idx]); i++){
-            reachable |= recursive(nums, i, memo);
+        for(int i=n-2; i>=0; i--){
+            for(int j=i+1; j<=Math.min(i+nums[i], n-1); j++){
+                if(reachable[j]){
+                    reachable[i] = true;
+                    break;
+                }
+            }
         }
-        return memo[idx] = reachable;
+        
+        return reachable[0];
+        
+        
     }
 }
 
 /*
 
-2 3 1 1 4
-  i
+[2,3,1,1,4]
+   T T T T
+   i
+  
+
 
 */
