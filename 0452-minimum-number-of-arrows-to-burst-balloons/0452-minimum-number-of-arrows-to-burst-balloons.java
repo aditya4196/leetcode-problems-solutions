@@ -6,7 +6,7 @@ class Solution {
         int count = 1;
         
         for(int i=0; i<points.length; i++){
-            System.out.println(points[i][0] + "-" + points[i][1]);
+            
             if(point[1] >= points[i][0]){
                 point[0] = Math.max(point[0], points[i][0]);
                 point[1] = Math.min(point[1], points[i][1]);
