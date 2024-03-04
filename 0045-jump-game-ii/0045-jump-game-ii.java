@@ -10,6 +10,8 @@ class Solution {
                 System.out.println(currEnd);
                 result++;
                 currEnd = currFar;
+                
+                if(currEnd == nums.length-1) return result;
             }
         }
         
@@ -17,3 +19,4 @@ class Solution {
         
     }
 }
+
