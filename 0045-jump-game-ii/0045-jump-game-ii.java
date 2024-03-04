@@ -1,27 +1,21 @@
 class Solution {
     public int jump(int[] nums) {
+        
+        int[] minSteps = new int[nums.length];
         int n = nums.length;
-        Integer[] memo = new Integer[n];
-        //memo[n-1] = 0;
         
-        return recursive(nums, 0, memo);
+        Arrays.fill(minSteps, n);
+        minSteps[0] = 0;
         
-    }
-    
-    public int recursive(int[] nums, int idx, Integer[] memo){
-        if(idx == nums.length-1) return 0;
-        if(nums[idx] == 0) return nums.length+1;
-        if(memo[idx]!=null) return memo[idx];
         
-        int minSteps = nums.length+1;
-        
-        for(int i=idx+1; i<=Math.min(nums.length-1, idx+nums[idx]); i++){
-            int totalSteps = 1 + recursive(nums, i, memo);
-            minSteps = Math.min(minSteps, totalSteps);
+        for(int i=0; i<n-1; i++){
+            for(int j=i+1; j<=Math.min(n-1, nums[i]+i); j++){
+                minSteps[j] = Math.min(minSteps[j], 1 + minSteps[i]);
+            }
         }
         
-        return memo[idx] = minSteps;
         
+        return minSteps[n-1];
         
         
         
@@ -29,3 +23,15 @@ class Solution {
         
     }
 }
+
+
+/*
+
+[2,3,1,1,4]
+[0,5,5,5,5]
+     
+min = i  
+      
+
+
+*/
