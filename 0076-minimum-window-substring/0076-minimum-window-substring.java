@@ -10,7 +10,6 @@ class Solution {
         int start = 0, end = 0, fstart = 0, fend = 0, minLength = Integer.MAX_VALUE;
         
         while(end < s.length()){
-            System.out.println(end + "" + start);
             char c = s.charAt(end++);
             if(countMap.containsKey(c)){
                 countMap.put(c, countMap.get(c) - 1);
