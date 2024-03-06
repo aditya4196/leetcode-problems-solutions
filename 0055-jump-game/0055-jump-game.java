@@ -2,7 +2,6 @@ class Solution {
     public boolean canJump(int[] nums) {
         
         int currEnd = 0, currFarthest = 0;
-        if(nums.length == 1) return true;
         
         for(int i=0; i<nums.length; i++){
             currFarthest = Math.max(currFarthest, i+nums[i]);
