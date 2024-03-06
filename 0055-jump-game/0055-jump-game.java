@@ -1,18 +1,31 @@
 class Solution {
     public boolean canJump(int[] nums) {
         
-        int currFar = 0, currEnd = 0;
-        int n = nums.length;
+        int currEnd = 0, currFarthest = 0;
+        if(nums.length == 1) return true;
         
-        for(int i=0; i<n; i++){
-            currFar = Math.max(currFar, nums[i]+i);
-            if(currEnd == i){
-                currEnd = currFar;
-                if(currEnd >= n-1) return true;
+        for(int i=0; i<nums.length; i++){
+            currFarthest = Math.max(currFarthest, i+nums[i]);
+            
+            if(i == currEnd){
+                currEnd = currFarthest;
+                if(currEnd >= nums.length-1) return true;
             }
         }
-        
         return false;
         
     }
 }
+
+/*
+
+2 3 1 1 4
+    i
+        f
+    e
+
+
+
+
+
+*/
