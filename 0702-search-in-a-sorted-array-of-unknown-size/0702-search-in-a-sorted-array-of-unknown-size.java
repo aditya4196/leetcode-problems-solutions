@@ -11,7 +11,8 @@ class Solution {
         
         if(reader.get(0) == target) return 0;
         
-        int right = rightIndex(reader, target), left = 0;
+        int[] boundaries = getBoundaries(reader, target);
+        int left = boundaries[0], right = boundaries[1];
         
         while(left <= right){
             int mid = left + (right-left)/2;
@@ -28,13 +29,13 @@ class Solution {
         
     }
     
-    public int rightIndex(ArrayReader reader, int target){
-        int idx = 1;
-        while(reader.get(idx) != Integer.MAX_VALUE && reader.get(idx) < target){
-            idx = idx*2;
+    public int[] getBoundaries(ArrayReader reader, int target){
+        int right = 1, left = 0;
+        while(reader.get(right) != Integer.MAX_VALUE && reader.get(right) < target){
+            left = right;
+            right <<= 2;
         }
-        
-        return idx;
+        return new int[]{left, right};
     }
 }
 
