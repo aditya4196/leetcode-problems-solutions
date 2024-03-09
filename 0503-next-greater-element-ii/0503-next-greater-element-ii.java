@@ -3,7 +3,7 @@ class Solution {
         
         int[] result = new int[nums.length];
         Arrays.fill(result, -1);
-        Deque<Integer> stack = new LinkedList();
+        Stack<Integer> stack = new Stack();
         
         for(int i=0; i<nums.length; i++){
             while(!stack.isEmpty() && nums[stack.peek()] < nums[i]){
@@ -12,27 +12,33 @@ class Solution {
             stack.push(i);
         }
         
-        int j=0;
-        while(j<nums.length & !stack.isEmpty()){
-            if(nums[j] > nums[stack.peek()]) result[stack.pop()] = nums[j];
-            else j++;
+        for(int j=0; j<nums.length; j++){
+            while(!stack.isEmpty() && nums[stack.peek()] < nums[j]){
+                result[stack.pop()] = nums[j];
+            }
+            stack.push(j);   
         }
         
         return result;
         
         
+        
     }
+    
+    
 }
 
 /*
 
+
+[1,2,1]
+
+[2,-1,-1]
+
 [100,1,11,1,120,111,123,1,-1,-100]
-  i
-  j
-stack = [120]
+                       i
+[120,11,120,120,123,123,-1,-1,-1,-1]
 
-1 - 11
-1 - 120
-
+stack = [123,1]
 
 */
