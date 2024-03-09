@@ -1,48 +1,100 @@
 class Solution {
     public int calculate(String s) {
         
-        int len = s.length();
-        int currentNumber = 0;
-        char operation = '+';
         Stack<Integer> stack = new Stack();
+        StringBuilder value = new StringBuilder();
         
-        for(int i=0; i<len; i++){
-            char c = s.charAt(i);
+        StringBuilder input = new StringBuilder();
+        
+        for(char c : s.toCharArray()){
+            if(c != ' ') input.append(c);
+        }
+        char prev = '@';
+        for(int i=0; i<input.length(); i++){
+            char c = input.charAt(i);
             
-            if(Character.isDigit(c)){
-                currentNumber = currentNumber*10 + Integer.parseInt(String.valueOf(c));
+            if(isOperator(c)){
+                if(prev == '+'){
+                    stack.push(Integer.parseInt(value.toString()));
+                }   
+                else if(prev == '-'){
+                    stack.push(Integer.parseInt(value.toString())*-1);
+                }
+                else if(prev == '*'){
+                    System.out.println("multiply");
+                    int prevValue = stack.pop();
+                    stack.push(Integer.parseInt(value.toString()) * prevValue);
+                }
+                else if(prev == '/'){
+                    int prevValue = stack.pop();
+                    stack.push(prevValue/Integer.parseInt(value.toString()));
+                }
+                else{
+                    stack.push(Integer.parseInt(value.toString()));
+                }
+                value = new StringBuilder();
+                prev = c;
+                //System.out.println(Arrays.asList(stack));
             }
-            if(!Character.isDigit(c) && !Character.isWhitespace(c) || i == len-1){
-                if(operation == '+') stack.push(currentNumber);
-                else if(operation == '-') stack.push(-currentNumber);
-                else if(operation == '*') stack.push(stack.pop()*currentNumber);
-                else if(operation == '/') stack.push(stack.pop()/currentNumber);
-                
-                operation = c;
-                currentNumber = 0;
+            else{
+                value.append(c);
             }
         }
+        
+        if(prev == '@'){
+            return Integer.parseInt(value.toString());
+        }
+        
+            if(isOperator(prev)){
+                if(prev == '+'){
+                    stack.push(Integer.parseInt(value.toString()));
+                }   
+                else if(prev == '-'){
+                    stack.push(Integer.parseInt(value.toString())*-1);
+                }
+                else if(prev == '*'){
+                    System.out.println("multiply");
+                    int prevValue = stack.pop();
+                    stack.push(Integer.parseInt(value.toString()) * prevValue);
+                }
+                else if(prev == '/'){
+                    int prevValue = stack.pop();
+                    stack.push(prevValue/Integer.parseInt(value.toString()));
+                }
+                else{
+                    stack.push(Integer.parseInt(value.toString()));
+                }
+            }
         
         int result = 0;
-        while(!stack.isEmpty()){
-            result += stack.pop();
+        for(int val : stack){
+            result += val;
         }
+        
         return result;
-        
-        
-        
-        
+    }
+    
+    public boolean isOperator(char op){
+        return (op == '/' || op == '+' || op == '*' || op == '-');
     }
 }
+
 
 /*
 
 
-32 +2* 2
+sign = 1
+
+"3+5/2"
      i
 
-num = 2
-stack = ['32','+']
-op = '+'
+string = "2"
+stack = ["3","5","/","2"]
+
+
+
+
+op = "/"
+
 
 */
