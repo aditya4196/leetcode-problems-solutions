@@ -1,27 +1,25 @@
 class Solution {
+    
+    private int totalRoomsVisited;
+    
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-
-        int visitedRooms = rooms.size();
-        boolean[] keys = new boolean[rooms.size()];
-        Deque<Integer> queue = new ArrayDeque<Integer>();
-        keys[0] = true;
-        queue.offer(0);
-
-        while(queue.size() > 0){
-            int size = queue.size();
-            for(int i=1; i<=size; i++){
-                int currRoom = queue.poll();
-                visitedRooms--;
-
-                for(int nextRoom : rooms.get(currRoom)){
-                    if(keys[nextRoom]) continue;
-                    keys[nextRoom] = true;
-                    queue.offer(nextRoom);
-                }
-            }
+        dfs(rooms, 0, new HashSet<Integer>());
+        return getTotalRooms() == rooms.size();
+    }
+    
+    public void dfs(List<List<Integer>> rooms, int currRoom, HashSet<Integer> visited){
+        visited.add(currRoom);
+        incrTotalRooms();
+        
+        for(int nextRoom : rooms.get(currRoom)){
+            if(!visited.contains(nextRoom)) dfs(rooms, nextRoom, visited);
         }
-
-        return visitedRooms == 0;
-
+    }
+    
+    public void incrTotalRooms(){
+        totalRoomsVisited+=1;
+    }
+    public int getTotalRooms(){
+        return totalRoomsVisited;
     }
 }
