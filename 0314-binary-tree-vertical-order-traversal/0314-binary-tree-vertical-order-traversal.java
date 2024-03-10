@@ -15,34 +15,42 @@
  */
 class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
-        Map<Integer, List<Integer>> colmap = new TreeMap();
-        Deque<Nodepair> queue = new LinkedList();
-        queue.offer(new Nodepair(root, 0));
         
-        while(queue.size() > 0){
-            Nodepair np = queue.poll();
-            if(np.node == null) continue;
-            colmap.computeIfAbsent(np.idx, k -> new ArrayList<Integer>()).add(np.node.val);
-            queue.offer(new Nodepair(np.node.left, np.idx-1));
-            queue.offer(new Nodepair(np.node.right, np.idx+1));
-        }
-    
         List<List<Integer>> result = new ArrayList();
-        for(List<Integer> list : colmap.values()){
-            result.add(list);
+        if(root == null) return result;
+        
+        Map<Integer, ArrayList<Integer>> verticalMap = new TreeMap<Integer, ArrayList<Integer>>();
+        Queue<Pair<TreeNode, Integer>> queue = new ArrayDeque();
+        queue.offer(new Pair<>(root, 0));
+
+        verticalMap.computeIfAbsent(0, k -> new ArrayList<Integer>()).add(root.val);
+        
+
+        while(queue.size() > 0){
+            int size = queue.size();
+            
+            for(int i=1; i<=size; i++){
+                Pair<TreeNode, Integer> pair = queue.poll();
+                
+                TreeNode curr = pair.getKey();
+                int idx = pair.getValue();
+                
+                if(curr.left!=null){
+
+                    verticalMap.computeIfAbsent(idx-1, k -> new ArrayList<Integer>()).add(curr.left.val);
+                    queue.offer(new Pair<>(curr.left, idx-1));
+                }
+                if(curr.right!=null){
+                    verticalMap.computeIfAbsent(idx+1, k -> new ArrayList<Integer>()).add(curr.right.val); 
+                    queue.offer(new Pair<>(curr.right, idx+1));
+                } 
+            }
         }
         
+        result.addAll(verticalMap.values());
         return result;
-    }   
-    
-}
-
-class Nodepair{
-    TreeNode node;
-    int idx;
-    
-    public Nodepair(TreeNode node, int idx){
-        this.idx = idx;
-        this.node = node;
+        
+        
+        
     }
 }
