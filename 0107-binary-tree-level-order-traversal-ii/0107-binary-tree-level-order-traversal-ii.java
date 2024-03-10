@@ -25,7 +25,7 @@ class Solution {
         
         while(queue.size() > 0){
             int size = queue.size();
-            List<Integer> level = new ArrayList();
+            List<Integer> level = new LinkedList();
             
             for(int i=1; i<=size; i++){
                 TreeNode curr = queue.poll();
