@@ -1,100 +1,77 @@
 class Solution {
     public int calculate(String s) {
         
-        Stack<Integer> stack = new Stack();
-        StringBuilder value = new StringBuilder();
+        Stack<Integer> numstack = new Stack();
+        Stack<Character> opstack = new Stack();
+        Map<Character, Integer> pref = new HashMap();
+        pref.put('+',0);
+        pref.put('-',0);
+        pref.put('*',1);
+        pref.put('/',1);
         
-        StringBuilder input = new StringBuilder();
+        int num = 0;
         
-        for(char c : s.toCharArray()){
-            if(c != ' ') input.append(c);
-        }
-        char prev = '@';
-        for(int i=0; i<input.length(); i++){
-            char c = input.charAt(i);
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
             
+            if(c == ' ') continue;
             if(isOperator(c)){
-                if(prev == '+'){
-                    stack.push(Integer.parseInt(value.toString()));
-                }   
-                else if(prev == '-'){
-                    stack.push(Integer.parseInt(value.toString())*-1);
+                numstack.push(num);
+                num = 0;
+                while(!opstack.isEmpty() && pref.get(opstack.peek()) >= pref.get(c)){
+                    int val2 = numstack.pop();
+                    int val1 = numstack.pop();
+                    numstack.push(calculate(opstack.pop(), val1, val2));
                 }
-                else if(prev == '*'){
-                    System.out.println("multiply");
-                    int prevValue = stack.pop();
-                    stack.push(Integer.parseInt(value.toString()) * prevValue);
-                }
-                else if(prev == '/'){
-                    int prevValue = stack.pop();
-                    stack.push(prevValue/Integer.parseInt(value.toString()));
-                }
-                else{
-                    stack.push(Integer.parseInt(value.toString()));
-                }
-                value = new StringBuilder();
-                prev = c;
-                //System.out.println(Arrays.asList(stack));
+                opstack.push(c);
             }
             else{
-                value.append(c);
+                num = num*10 + (c-'0');
             }
         }
         
-        if(prev == '@'){
-            return Integer.parseInt(value.toString());
+        numstack.push(num);     
+        while(!opstack.isEmpty()){
+            int val2 = numstack.pop();
+            int val1 = numstack.pop();
+            numstack.push(calculate(opstack.pop(), val1, val2));
         }
         
-            if(isOperator(prev)){
-                if(prev == '+'){
-                    stack.push(Integer.parseInt(value.toString()));
-                }   
-                else if(prev == '-'){
-                    stack.push(Integer.parseInt(value.toString())*-1);
-                }
-                else if(prev == '*'){
-                    System.out.println("multiply");
-                    int prevValue = stack.pop();
-                    stack.push(Integer.parseInt(value.toString()) * prevValue);
-                }
-                else if(prev == '/'){
-                    int prevValue = stack.pop();
-                    stack.push(prevValue/Integer.parseInt(value.toString()));
-                }
-                else{
-                    stack.push(Integer.parseInt(value.toString()));
-                }
-            }
+        return numstack.pop();
         
+        
+        
+    }
+    
+    public int calculate(char op, int num1, int num2){
         int result = 0;
-        for(int val : stack){
-            result += val;
+        switch(op){
+            case '+':
+                result = num1 + num2;
+                break;
+            case '-':
+                result = num1 - num2;
+                break;
+            case '*':
+                result = num1 * num2;
+                break;
+            case '/':
+                result = num1 / num2;
+                break;
         }
-        
         return result;
     }
     
-    public boolean isOperator(char op){
-        return (op == '/' || op == '+' || op == '*' || op == '-');
+    public boolean isOperator(char c){
+        return (c == '+' || c == '*' || c == '-' || c == '/');
     }
 }
 
 
 /*
-
-
-sign = 1
-
-"3+5/2"
-     i
-
-string = "2"
-stack = ["3","5","/","2"]
-
-
-
-
-op = "/"
-
+"3*2+2"
+    i
+numstack = [3,2,2]
+opstack = [+,*]
 
 */
