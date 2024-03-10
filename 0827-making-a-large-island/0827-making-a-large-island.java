@@ -35,18 +35,8 @@ class Solution {
         
         //go through zeros and combine the islands
         int[][] dirs = {{0,1},{1,0},{0,-1},{-1,0}};
-        
-        for(int i=0; i<m; i++){
-            for(int j=0; j<n; j++){
-                System.out.print(components[i][j] + " ");
-            }
-            System.out.println();
-            
-        }
-        
-        for(int key : islandMap.keySet()){
-            System.out.println(key + "-" + islandMap.get(key));
-        }
+
+
         
         Set<Integer> addedIsland = new HashSet();
         
