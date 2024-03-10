@@ -1,8 +1,8 @@
 class Solution {
     public int[] findBuildings(int[] heights) {
         
-        Deque<Integer> stack = new LinkedList();
-        
+        Stack<Integer> stack = new Stack();
+
         for(int i=0; i<heights.length; i++){
             while(!stack.isEmpty() && heights[stack.peek()] <= heights[i]){
                 stack.pop();
@@ -11,21 +11,18 @@ class Solution {
         }
         
         int[] result = new int[stack.size()];
-        
-        for(int i=result.length-1; i>=0; i--){
-            result[i] = stack.pop();
+        for(int i=0; i<result.length; i++){
+            result[i] = stack.get(i);
         }
-        return result;
         
+        return result;
     }
 }
 
 /*
+ 0 1 2 3
+[4,2,3,1]
 
-
-[1,3,2,4]
-
-stack = [4]
-
+stack = [4,3,1]
 
 */
