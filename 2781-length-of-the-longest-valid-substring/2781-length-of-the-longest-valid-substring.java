@@ -6,7 +6,7 @@ class Solution {
         int end = n-1;
         
         for(int i=n-1; i>=0; i--){
-            for(int j=i; (j<=end && (j-i) < 10); j++){
+            for(int j=i; (j<=end && (j-i) <= 10); j++){
                 String checkString = word.substring(i, j+1);
                 if(forbiddenSet.contains(checkString)){
                     end = j-1;
