@@ -16,41 +16,44 @@ class Node {
 class Solution {
     public Node copyRandomList(Node head) {
         
-        Map<Node, Node> nodesMap = new HashMap();
         Node newhead = new Node(-1);
         Node curr = head;
-        Node oldhead = head;
+        HashMap<Node, Node> oldtoNewMap = new HashMap();
         
-        while(oldhead!=null){
-            newhead.next = new Node(oldhead.val);
-            nodesMap.put(oldhead, newhead.next);
-            oldhead = oldhead.next;
+        while(curr!=null){
+            newhead.next = new Node(curr.val);
+            oldtoNewMap.put(curr, newhead.next);
+            curr = curr.next;
             newhead = newhead.next;
         }
         
-        newhead = null;
-
+        
+        
+        curr = head;
         while(curr!=null){
-            newhead = nodesMap.get(curr);
-            if(curr.random != null){
-                newhead.random = nodesMap.get(curr.random);
-            }
+            newhead = oldtoNewMap.get(curr);
+            newhead.random = oldtoNewMap.get(curr.random);
             curr = curr.next;
         }
         
-        return nodesMap.get(head);
+        return oldtoNewMap.get(head);
         
         
         
     }
 }
 
+
 /*
 
-[[7,null],[13,0],[11,4],[10,2],[1,0]]
+new7 to old7
+
+7 -> 13 -> 11 -> 10 -> 1 -> null
+
+newNode(oldnode.val)
+map.put(oldNode, newNode)
 
 
-old -> new
-7 -> new7
+
 
 */
