@@ -15,18 +15,22 @@
  */
 class Solution {
     public TreeNode invertTree(TreeNode root) {
-        dfs(root);
+        if(root == null) return root;
+        Stack<TreeNode> stack = new Stack();
+        TreeNode curr = root;
+        stack.push(curr);
+        
+        while(!stack.isEmpty()){
+            curr = stack.pop();
+            
+            TreeNode temp = curr.left;
+            curr.left = curr.right;
+            curr.right = temp;
+            
+            if(curr.left!=null) stack.push(curr.left);
+            if(curr.right!=null) stack.push(curr.right);
+        }
+        
         return root;
     }
-    
-    public void dfs(TreeNode root){
-        if(root == null) return;
-        
-        TreeNode temp = root.left;
-        root.left = root.right;
-        root.right = temp;
-        
-        dfs(root.left);
-        dfs(root.right);
-    }
-}
+} 
