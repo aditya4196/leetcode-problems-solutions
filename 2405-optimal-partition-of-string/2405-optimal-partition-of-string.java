@@ -1,18 +1,33 @@
 class Solution {
     public int partitionString(String s) {
-        int[] last = new int[26];
         
-        Arrays.fill(last, -1);
-        int total = 1, start = 0;
-
-        for (int i = 0; i < s.length(); i++) {
-            if (last[s.charAt(i) - 'a'] >= start) {
-                total++;
-                start = i;
+        Set<Character> set = new HashSet();
+        int count = 0;
+        
+        for(int j=0; j<s.length(); j++){
+            if(set.contains(s.charAt(j))){
+                count++;
+                set.clear();
             }
-            last[s.charAt(i) - 'a'] = i;
+            set.add(s.charAt(j));
         }
-
-        return total;
+        
+        return (set.size() > 0)?(count+1):count;
+        
     }
 }
+
+/*
+
+a - 6
+b - 5
+c - 3
+
+
+
+0123456
+abacaba
+i
+j
+
+*/
