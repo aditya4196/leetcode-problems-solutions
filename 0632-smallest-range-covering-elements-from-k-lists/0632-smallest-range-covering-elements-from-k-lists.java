@@ -47,7 +47,6 @@ class Solution {
                 
                 int left = sortedList.get(start).getKey();
                 int right = sortedList.get(end).getKey();
-                System.out.println(left + "-" + right);
                 if(minLength > (right-left+1)){
                     minLength = right-left+1;
                     minend = end;
@@ -64,8 +63,7 @@ class Solution {
         }
         
         
-        
-        System.out.println(sortedList);
+
         return new int[]{sortedList.get(minstart).getKey(), sortedList.get(minend).getKey()};
     }
 }
