@@ -17,7 +17,7 @@ class Solution {
         
         List<Integer> result = new ArrayList();
         
-        Deque<Pair<TreeNode, Integer>> queue = new ArrayDeque();
+        Deque<Pair<TreeNode, Integer>> queue = new LinkedList();
         queue.offer(new Pair<>(target, 0));
         
         Set<Integer> visited = new HashSet();
