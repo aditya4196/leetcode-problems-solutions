@@ -38,7 +38,7 @@ class Solution {
             
             int leftIdx = leftMost[a];
             int rightIdx = rightMost[b];
-            System.out.println(leftIdx + "-" + rightIdx + "-" + a + "-" + b);
+
             int count = prefixSum[rightIdx] - prefixSum[leftIdx];
             result[i++] = (count < 0)?0:count;
         }
