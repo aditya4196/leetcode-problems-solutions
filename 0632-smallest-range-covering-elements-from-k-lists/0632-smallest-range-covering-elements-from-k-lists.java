@@ -51,39 +51,6 @@ class Solution {
             Pair<Integer,  Integer> nextPairToOffer = new Pair<Integer, Integer>(nums.get(idx).get(indexMap.get(idx)), idx);
             pq.offer(nextPairToOffer);
         }
-        
-        
-        //sliding window
-    
-        
-//         for(int end=0; end<n; end++){
-//             Pair<Integer, Integer> currPair = sortedList.get(end);
-//             int egroup = currPair.getValue();
-//             int evalue = currPair.getKey();
-        
-//             if(groupCount[egroup]++ == 0) count++;
-            
-//             while(count == k){
-                
-//                 int left = sortedList.get(start).getKey();
-//                 int right = sortedList.get(end).getKey();
-//                 if(minLength > (right-left+1)){
-//                     minLength = right-left+1;
-//                     minend = end;
-//                     minstart = start;
-//                 }
-                
-//                 Pair<Integer, Integer> startPair = sortedList.get(start);
-//                 int sgroup = startPair.getValue();
-//                 int svalue = startPair.getKey();
-                
-//                 if(--groupCount[sgroup] == 0) count--;
-//                 start++;
-//             }
-//         }
-        
-        
-
         return new int[]{sortedList.get(minstart).getKey(), sortedList.get(minend).getKey()};
     }
 }
