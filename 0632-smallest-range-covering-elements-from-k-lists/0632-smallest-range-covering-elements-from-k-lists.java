@@ -11,24 +11,7 @@ class Solution {
         }
         
         
-        
-        
-        while(pq.size() > 0){
-            Pair<Integer, Integer> currPair = pq.poll();
-            sortedList.add(currPair);
-            
-            int idx = currPair.getValue();
-            indexMap.put(idx, indexMap.get(idx)+1);
-            if(indexMap.get(idx) >= nums.get(idx).size()) continue;
-
-            Pair<Integer,  Integer> nextPairToOffer = new Pair<Integer, Integer>(nums.get(idx).get(indexMap.get(idx)), idx);
-            pq.offer(nextPairToOffer);
-        }
-        
-        
-        //sliding window
-        
-        int start = 0, count = 0;
+        int start = 0, count = 0, end = 0;
         int k = nums.size();
         int n = sortedList.size();
         
@@ -36,12 +19,11 @@ class Solution {
         int minstart = 0, minend = n;
         int minLength = Integer.MAX_VALUE;
         
-        for(int end=0; end<n; end++){
-            Pair<Integer, Integer> currPair = sortedList.get(end);
-            int egroup = currPair.getValue();
-            int evalue = currPair.getKey();
-        
-            if(groupCount[egroup]++ == 0) count++;
+        while(pq.size() > 0){
+            Pair<Integer, Integer> currPair = pq.poll();
+            sortedList.add(currPair);
+            if(groupCount[currPair.getValue()]++ == 0) count++;
+           
             
             while(count == k){
                 
@@ -60,7 +42,45 @@ class Solution {
                 if(--groupCount[sgroup] == 0) count--;
                 start++;
             }
+            
+            end++;
+            int idx = currPair.getValue();
+            indexMap.put(idx, indexMap.get(idx)+1);
+            if(indexMap.get(idx) >= nums.get(idx).size()) continue;
+
+            Pair<Integer,  Integer> nextPairToOffer = new Pair<Integer, Integer>(nums.get(idx).get(indexMap.get(idx)), idx);
+            pq.offer(nextPairToOffer);
         }
+        
+        
+        //sliding window
+    
+        
+//         for(int end=0; end<n; end++){
+//             Pair<Integer, Integer> currPair = sortedList.get(end);
+//             int egroup = currPair.getValue();
+//             int evalue = currPair.getKey();
+        
+//             if(groupCount[egroup]++ == 0) count++;
+            
+//             while(count == k){
+                
+//                 int left = sortedList.get(start).getKey();
+//                 int right = sortedList.get(end).getKey();
+//                 if(minLength > (right-left+1)){
+//                     minLength = right-left+1;
+//                     minend = end;
+//                     minstart = start;
+//                 }
+                
+//                 Pair<Integer, Integer> startPair = sortedList.get(start);
+//                 int sgroup = startPair.getValue();
+//                 int svalue = startPair.getKey();
+                
+//                 if(--groupCount[sgroup] == 0) count--;
+//                 start++;
+//             }
+//         }
         
         
 
@@ -73,12 +93,24 @@ class Solution {
 
 
 [4,10,15,24,26]
-
+    
  
 [0,9,12,20]
    
  
 [5,18,22,30]
+ 
+
+[0,4,5]
+ s   e
+ 
+ 
+count = 1
+
+pq = (5,10)
+
+
+
 
 
 [[0,0],[]]
