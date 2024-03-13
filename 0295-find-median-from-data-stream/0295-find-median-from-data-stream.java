@@ -1,37 +1,36 @@
 class MedianFinder {
-    
-    PriorityQueue<Integer> maxpq;
-    PriorityQueue<Integer> minpq;
+
+    private PriorityQueue<Integer> maxLeft;
+    private PriorityQueue<Integer> minRight;
+
     
     public MedianFinder() {
-        maxpq = new PriorityQueue<Integer>((a,b)->(b-a));
-        minpq = new PriorityQueue<Integer>((a,b)->(a-b));
+        maxLeft = new PriorityQueue<Integer>((a,b)->(b-a));
+        minRight = new PriorityQueue<Integer>((a,b)->(a-b));
+
+        
     }
     
     public void addNum(int num) {
-        if(maxpq.size() == 0){
-            maxpq.offer(num);
+        if(maxLeft.size() == 0){
+            maxLeft.offer(num);
             return;
         }
-        if(num > maxpq.peek()){
-            minpq.offer(num);
-        }
-        else maxpq.offer(num);
         
-        int maxsize = maxpq.size();
-        int minsize = minpq.size();
+        if(num < maxLeft.peek()) maxLeft.offer(num);
+        else minRight.offer(num);
         
-        if((maxsize + minsize)%2 != 0 && minsize > maxsize){
-            maxpq.offer(minpq.poll());
-        }
-        else if((maxsize + minsize)%2 == 0 && maxsize > minsize){
-            minpq.offer(maxpq.poll());
-        }
+        int leftsize = maxLeft.size();
+        int rightsize = minRight.size();
+        
+        if((leftsize + rightsize)%2 != 0 && rightsize > leftsize) maxLeft.offer(minRight.poll());
+        else if((leftsize + rightsize)%2 == 0 && leftsize > rightsize) minRight.offer(maxLeft.poll());
     }
     
     public double findMedian() {
-        if(maxpq.size() == minpq.size()) return (double)(maxpq.peek() + minpq.peek())/2;
-        else return maxpq.peek();
+        
+        if(minRight.size() == maxLeft.size()) return (double)(maxLeft.peek() + minRight.peek())/2;
+        else return maxLeft.peek();
     }
 }
 
@@ -42,15 +41,21 @@ class MedianFinder {
  * double param_2 = obj.findMedian();
  */
 
+
 /*
 
-1 4 6 7 4 2 1
+minpq(right) = 3  
+maxpq(left) = 1
 
-1 4
 
-[1, 4] - [6]          
+/*
+  6 or 2
+
+                 2  |.  6
 
 
 
 
 */
+
+
