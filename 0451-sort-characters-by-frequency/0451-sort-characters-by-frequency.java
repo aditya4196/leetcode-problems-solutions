@@ -1,29 +1,34 @@
 class Solution {
     public String frequencySort(String s) {
-        Map<Character, Integer> countMap = new HashMap();
-        
+        Map<Character, Integer> map = new HashMap();
         for(char c : s.toCharArray()){
-            countMap.put(c,countMap.getOrDefault(c,0)+1);
+            map.put(c, map.getOrDefault(c,0)+1);
         }
         
-        PriorityQueue<Character> pq = new PriorityQueue<Character>((a,b)->(countMap.get(b)-countMap.get(a)));
-        
-        for(char c : countMap.keySet()){
-            pq.offer(c);
-        }
+        PriorityQueue<Character> pq = new PriorityQueue<Character>((a,b) -> map.get(b)-map.get(a));
+        for(char c : map.keySet()) pq.offer(c);
         
         StringBuilder result = new StringBuilder();
-        
         while(pq.size() > 0){
             char c = pq.poll();
-            while(countMap.get(c) > 0){
+            for(int i=1; i<=map.get(c); i++){
                 result.append(c);
-                countMap.put(c, countMap.get(c)-1);
             }
         }
         
         return result.toString();
         
         
+        
     }
 }
+
+/*
+
+
+tree
+
+
+
+
+*/
