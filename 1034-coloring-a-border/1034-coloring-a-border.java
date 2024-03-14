@@ -34,7 +34,6 @@ class Solution {
     }
     
     public void setComponent(int[][] grid, int row, int col, int color, boolean[][] visited){
-        System.out.println(row + "-" + col);
         if(!isValidBound(row, col, grid.length, grid[0].length) || visited[row][col] || grid[row][col] != color) return;
         visited[row][col] = true;
         
