@@ -1,36 +1,38 @@
 class Solution {
     public String reorganizeString(String s) {
         
-        Map<Character, Integer> map = new HashMap();
-        PriorityQueue<Character> pq = new PriorityQueue<Character>((a,b) -> (map.get(b) - map.get(a)));
-        
+        HashMap<Character, Integer> countMap = new HashMap();
         for(char c : s.toCharArray()){
-            map.put(c, map.getOrDefault(c,0)+1);
+            countMap.put(c, countMap.getOrDefault(c,0)+1);
         }
         
-        for(char c : map.keySet()){
+        PriorityQueue<Character> pq = new PriorityQueue<Character>((a,b) -> (countMap.get(b) - countMap.get(a)));
+        
+        for(char c : countMap.keySet()){
             pq.offer(c);
         }
         
-        if(pq.size() == 0) return "";
-        
         StringBuilder result = new StringBuilder();
-        char first = pq.poll();
-        result.append(first);
-        
         while(pq.size() > 0){
-            char second = pq.poll();
+            char first = pq.poll();
             
-            result.append(second);
-            
-            map.put(first, map.get(first)-1);
-            if(map.get(first) > 0) pq.offer(first);
-            first = second;
+            if(result.length() == 0 || (first != result.charAt(result.length()-1))){
+                result.append(first);
+                countMap.put(first, countMap.get(first)-1);
+                if(countMap.get(first) > 0) pq.offer(first);
+            }
+            else{
+                if(pq.size() == 0) return "";
+
+                char second = pq.poll();
+                result.append(second);
+                countMap.put(second, countMap.get(second)-1);
+                if(countMap.get(second) > 0) pq.offer(second);
+                pq.offer(first);
+            }
         }
         
-        
-        return (result.length() != s.length())?"":result.toString();
-        
+        return result.toString();
         
         
     }
@@ -38,13 +40,18 @@ class Solution {
 
 /*
 
-aabbabccd
 
-aba
 a - 2
 b - 2
-c - 2
-d - 1
+c - 1
+
+pq = [a,b,c]
+polled = a
+
+result = a
+
+    
+
 
 
 */
