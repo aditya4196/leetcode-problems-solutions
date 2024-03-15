@@ -15,7 +15,6 @@ class Solution {
         for(String word : words){
             addWord(word);
         }
-
         for(int i=0; i<26; i++){
             traverse(root.children[i], 0);
         }
@@ -23,23 +22,20 @@ class Solution {
     }
     
     public void traverse(TrieNode curr, int prevCount){
-        if(curr == null) return;
-        
-        if(!curr.isWord) return;
+        if(curr == null || !curr.isWord) return;
+
         if(curr.count == (prevCount+1)){
             if(maxLength < curr.count){
                 maxLength = curr.count;
                 maxString = curr.word;
             }
         }
-        
         for(int i=0; i<26; i++){
             traverse(curr.children[i], curr.count);
         }
     }
     
-    
-    
+
     public void addWord(String word){
         TrieNode curr = root;
         for(int i=0; i<word.length(); i++){
