@@ -16,7 +16,7 @@ class Solution {
         
         for(int i=1; i<=size; i++){
             int currCount = count[pq.poll()-'a'];
-            
+
             if(i>9 && i<=18){
                 result = result + (currCount*2);
             }
