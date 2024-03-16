@@ -1,39 +1,42 @@
 class Solution {
     public int minOperations(int[] nums) {
         
-        int n = nums.length;
-        Map<Integer, Integer> countmap = new HashMap();
-        int maxCount = 0;
+        Map<Integer, Integer> countMap = new HashMap();
+        for(int num : nums) countMap.put(num, countMap.getOrDefault(num,0)+1);
+        int result = 0;
         
-        for(int num : nums){
-            countmap.put(num, countmap.getOrDefault(num,0)+1);
-            maxCount = Math.max(maxCount, countmap.get(num));
+        for(int count : countMap.values()){
+            
+            if(count%3 == 0) result += count/3;
+            else{
+                while(count%3 != 0 && count > 1){
+                    count -= 2;
+                    result += 1;
+                }
+                if(count == 1) return -1;
+                
+                result += (count/3);
+            }
         }
         
-        int[] freq = new int[maxCount+1];
-        int[] dp = new int[maxCount+1];
+        return result;
         
-        for(int val : countmap.values()){
-            if(val == 1) return -1;
-            freq[val]+=1;
-        }
         
-        if(maxCount == 2) return freq[2];
-        if(maxCount == 3) return freq[3] + freq[2];
-        
-        dp[1] = dp[2] = dp[3] = 1;
-        
-        for(int i=4; i<=maxCount; i++){
-            dp[i] = Math.min(dp[i-2],dp[i-3])+1;
-        }
-    
-        
-        int totalops = 0;
-        for(int i=0; i<freq.length; i++){
-            totalops += (dp[i]*freq[i]);
-        }
-        
-        return totalops;
         
     }
 }
+
+/*
+
+[2,3,3,2,2,4,2,3,4]
+
+2 - 4
+3 - 3
+4 - 2
+
+
+
+
+
+
+*/
