@@ -56,11 +56,11 @@ class Solution {
         while(queue.size() > 0){
             int size = queue.size();
             count++;
-            System.out.println(count);
+
             for(int i=1; i<=size; i++){
                 String curr = queue.poll();
                 visited.add(curr);
-                System.out.println(curr);
+
                 if(curr.equals(endWord)) return count;
                 
                 if(!adjlist.containsKey(curr)) continue;
