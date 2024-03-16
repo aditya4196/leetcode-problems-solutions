@@ -42,7 +42,6 @@ class Solution {
                             set.add(dsu.parent[adj_idx]);
                         }
                      }
-                    System.out.println(count);
                     maxArea = Math.max(maxArea, count);
                 }   
             }
