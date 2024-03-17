@@ -1,35 +1,40 @@
 class MedianFinder {
-
-    private PriorityQueue<Integer> maxLeft;
-    private PriorityQueue<Integer> minRight;
-
     
+    private int size;
+    private PriorityQueue<Integer> maxLeft, minRight;
+
     public MedianFinder() {
+        this.size = 0;
         maxLeft = new PriorityQueue<Integer>((a,b)->(b-a));
         minRight = new PriorityQueue<Integer>((a,b)->(a-b));
-
-        
     }
     
     public void addNum(int num) {
         if(maxLeft.size() == 0){
             maxLeft.offer(num);
+            this.size+=1;
             return;
         }
         
         if(num < maxLeft.peek()) maxLeft.offer(num);
         else minRight.offer(num);
+        this.size += 1;
         
-        int leftsize = maxLeft.size();
-        int rightsize = minRight.size();
+        int leftSize = maxLeft.size();
+        int rightSize = minRight.size();
         
-        if((leftsize + rightsize)%2 != 0 && rightsize > leftsize) maxLeft.offer(minRight.poll());
-        else if((leftsize + rightsize)%2 == 0 && leftsize > rightsize) minRight.offer(maxLeft.poll());
+        if(this.size%2 == 0 && leftSize > rightSize){
+            minRight.offer(maxLeft.poll());
+        }
+        else if(this.size%2 != 0 && rightSize > leftSize){
+                maxLeft.offer(minRight.poll());
+            }
     }
-    
+
     public double findMedian() {
-        
-        if(minRight.size() == maxLeft.size()) return (double)(maxLeft.peek() + minRight.peek())/2;
+        if(this.size%2 == 0){
+            return ((double)maxLeft.peek() + minRight.peek())/2;
+        }   
         else return maxLeft.peek();
     }
 }
@@ -39,23 +44,12 @@ class MedianFinder {
  * MedianFinder obj = new MedianFinder();
  * obj.addNum(num);
  * double param_2 = obj.findMedian();
+ 
+ 
+ add 1, 
+ 
+ [1,2,0] | [3]
+ 
+ size = 1
+ 
  */
-
-
-/*
-
-minpq(right) = 3  
-maxpq(left) = 1
-
-
-/*
-  6 or 2
-
-                 2  |.  6
-
-
-
-
-*/
-
-
