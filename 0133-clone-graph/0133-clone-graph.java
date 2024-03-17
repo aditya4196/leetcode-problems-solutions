@@ -19,39 +19,25 @@ class Node {
 */
 
 class Solution {
-    Map<Node, Node> oldToNewMap = new HashMap();
-    
     public Node cloneGraph(Node node) {
-        return dfs(node, oldToNewMap); 
+        if(node == null) return null;
+        HashMap<Node, Node> oldToNewMap = new HashMap();
+        return backTrack(node, oldToNewMap);
     }
     
-    public Node dfs(Node node, Map<Node, Node> nodeMap){
-        if(node == null) return null;
+    public Node backTrack(Node node, HashMap<Node, Node> oldToNewMap){
         Node newNode = new Node(node.val);
-        nodeMap.put(node, newNode);
+        oldToNewMap.put(node, newNode);
         
         for(Node neighbor : node.neighbors){
-            if(nodeMap.containsKey(neighbor)){
-                newNode.neighbors.add(nodeMap.get(neighbor));
+            if(oldToNewMap.containsKey(neighbor)){
+                newNode.neighbors.add(oldToNewMap.get(neighbor));
             }
-            else newNode.neighbors.add(dfs(neighbor, nodeMap));
+            else{
+                newNode.neighbors.add(backTrack(neighbor, oldToNewMap));
+            }
         }
         
         return newNode;
     }
 }
-
-
-/*
-
-newnode(0) -> 
-
-
-
-
-
-
-
-
-
-*/
