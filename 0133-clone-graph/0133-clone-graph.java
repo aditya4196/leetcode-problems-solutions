@@ -20,7 +20,7 @@ class Node {
 
 class Solution {
     public Node cloneGraph(Node node) {
-        if(node == null) return null;
+        if(node == null) return node;
         HashMap<Node, Node> oldToNewMap = new HashMap();
         return backTrack(node, oldToNewMap);
     }
