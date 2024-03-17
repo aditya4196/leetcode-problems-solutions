@@ -1,61 +1,69 @@
 class Solution {
+    int m, n;
+    final int[][] dirs = {{0,1},{1,0},{-1,0},{0,-1}};
     
-    int[][] dirs = {{0,1},{1,0},{0,-1},{-1,0}};
     public int[][] colorBorder(int[][] grid, int row, int col, int color) {
         
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
-        setComponent(grid, row, col, grid[row][col], visited);
+        //form the island
+        this.m = grid.length;
+        this.n = grid[0].length;
         
-        for(int i=0; i<grid.length; i++){
-            for(int j=0; j<grid[0].length; j++){
-                if(visited[i][j]){
-                    if(i == 0 || j == 0 || i == grid.length-1 || j == grid[0].length-1){
-                        grid[i][j] = color;
-                    }
-                    else{
-                        
-                        for(int[] dir : dirs){
-                            int nexti = i + dir[0];
-                            int nextj = j + dir[1];
-                            if(isValidBound(nexti, nextj, grid.length, grid[0].length) && !visited[nexti][nextj]){
-                                grid[i][j] = color;
-                                break;
-                            }
-                        }
-                        
-                    }
-                }
+        boolean[][] candidate = new boolean[m][n];
+        dfs(grid, row, col, candidate, grid[row][col]);
+       
+        int[][] result = new int[m][n];
+        
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                result[i][j] = grid[i][j];
             }
         }
         
-        return grid;
         
+        
+        //color the nodes with the boundary or not inside the component
+        for(int i=0; i<this.m; i++){
+            for(int j=0; j<this.n; j++){
+                if(candidate[i][j] && grid[i][j] != color && (isBoundary(i, j) || isAdjacency(grid, i, j, grid[i][j]))){
+                        result[i][j] = color;
+                    }
+                }
+        }
+        
+        
+        
+        return result;
         
     }
     
-    public void setComponent(int[][] grid, int row, int col, int color, boolean[][] visited){
-        if(!isValidBound(row, col, grid.length, grid[0].length) || visited[row][col] || grid[row][col] != color) return;
-        visited[row][col] = true;
+    public void dfs(int[][] grid, int i, int j, boolean[][] visited, int color){
+        if(!isValidBounds(i,j) || visited[i][j] || grid[i][j] !=  color) return;
         
+        visited[i][j] = true;
         for(int[] dir : dirs){
-            int nextrow = row + dir[0];
-            int nextcol = col + dir[1];
-            setComponent(grid, nextrow, nextcol, color, visited);
+            int adj_i = i + dir[0];
+            int adj_j = j + dir[1];
+            dfs(grid, adj_i, adj_j, visited, color);
         }
     }
     
-    public boolean isValidBound(int row, int col, int m, int n){
-        return (row >= 0 && col >= 0 && row < m && col < n);
+    public boolean isAdjacency(int[][] grid, int i, int j, int color){
+        int count = 0;
+        for(int[] dir : dirs){
+            int adj_i = i + dir[0];
+            int adj_j = j + dir[1];
+            
+            if(isValidBounds(adj_i,adj_j) && grid[adj_i][adj_j] != color) count++;
+        }
+        
+        return count > 0;
+    }
+    
+    public boolean isValidBounds(int i, int j){
+        return (i>=0 && j>=0 && i<this.m && j<this.n);
+    }
+    
+    public boolean isBoundary(int i, int j){
+        return (i == 0 || j == 0 || i == (this.m-1) || j == (this.n-1));
     }
 }
-
-/*
-
-[1,2,2]
-[2,3,2]
-
-color = 3
-
-
-
-*/
