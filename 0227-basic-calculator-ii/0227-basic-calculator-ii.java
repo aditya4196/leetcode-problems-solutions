@@ -1,74 +1,46 @@
 class Solution {
     public int calculate(String s) {
-        
-        Stack<Integer> numstack = new Stack();
-        Stack<Character> opstack = new Stack();
-        Map<Character, Integer> pref = new HashMap();
-        pref.put('+',0);
-        pref.put('-',0);
-        pref.put('*',1);
-        pref.put('/',1);
-        
+        Stack<Integer> stack = new Stack<Integer>();
         int num = 0;
+        char op = '+';
         
-        for(int i=0; i<s.length(); i++){
-            char c = s.charAt(i);
-            
-            if(c == ' ') continue;
-            if(isOperator(c)){
-                numstack.push(num);
+        for(char c : s.toCharArray()){
+            if(Character.isDigit(c)){
+                num = num*10 + (int)(c-'0');
+            }
+            else if(isOperator(c)){
+                helper(stack, num, op);
+                op = c;
                 num = 0;
-                while(!opstack.isEmpty() && pref.get(opstack.peek()) >= pref.get(c)){
-                    int val2 = numstack.pop();
-                    int val1 = numstack.pop();
-                    numstack.push(calculate(opstack.pop(), val1, val2));
-                }
-                opstack.push(c);
-            }
-            else{
-                num = num*10 + (c-'0');
             }
         }
+        helper(stack, num, op);
         
-        numstack.push(num);     
-        while(!opstack.isEmpty()){
-            int val2 = numstack.pop();
-            int val1 = numstack.pop();
-            numstack.push(calculate(opstack.pop(), val1, val2));
-        }
-        
-        return numstack.pop();
-    }
-    
-    public int calculate(char op, int num1, int num2){
         int result = 0;
-        switch(op){
-            case '+':
-                result = num1 + num2;
-                break;
-            case '-':
-                result = num1 - num2;
-                break;
-            case '*':
-                result = num1 * num2;
-                break;
-            case '/':
-                result = num1 / num2;
-                break;
+        while(!stack.isEmpty()){
+            result += stack.pop();
         }
         return result;
     }
     
-    public boolean isOperator(char c){
-        return (c == '+' || c == '*' || c == '-' || c == '/');
+    public void helper(Stack<Integer> stack, int num, char op){
+        if(op == '+'){
+            stack.push(num);
+        }
+        else if(op == '-'){
+            stack.push(-1*num);
+        }
+        else if(op == '*'){
+            stack.push(stack.pop()*num);
+        }
+        else if(op == '/'){
+            stack.push(stack.pop()/num);
+        }
+    }
+    
+    
+    
+    public boolean isOperator(char op){
+        return (op == '+' || op == '-' || op == '*' || op == '/');
     }
 }
-
-
-/*
-"3*2+2"
-    i
-numstack = [3,2,2]
-opstack = [+,*]
-
-*/
