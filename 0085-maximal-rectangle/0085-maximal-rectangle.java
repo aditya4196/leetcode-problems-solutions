@@ -28,20 +28,22 @@ class Solution {
         return maxArea;
     }
     
-    public int calculateMaxArea(int[] heights){
+    public int calculateMaxArea(int[] input){
+
+        int n = input.length;
+        int maxArea = 0;
         Stack<Integer> stack = new Stack<Integer>();
-        int maxArea = 0, n = heights.length;
-        
         for(int i=0; i<=n; i++){
-            int currHeight = ((i == n)?0:heights[i]);
-            while(!stack.isEmpty() && currHeight < heights[stack.peek()]){
-                int minHeight = heights[stack.pop()];
+            int currHeight = (i == n)?0:input[i];
+            while(!stack.isEmpty() && currHeight < input[stack.peek()]){
+                int minHeight = input[stack.pop()];
                 int area = (i - (stack.isEmpty()?0:stack.peek() + 1))*minHeight;
                 maxArea = Math.max(maxArea, area);
             }
             stack.push(i);
         }
         
+        System.out.println(maxArea);
         return maxArea;
     }
 }
