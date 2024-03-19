@@ -1,44 +1,35 @@
 class Solution {
     public String minRemoveToMakeValid(String s) {
-        
-        Deque<Integer> stack = new LinkedList();
+        Set<Integer> emptyClose = new HashSet<Integer>();
+        Stack<Integer> stack = new Stack();
         
         for(int i=0; i<s.length(); i++){
-            if(s.charAt(i) == ')'){
-                if(!stack.isEmpty() && s.charAt(stack.peek()) == '('){
-                    stack.pop();
-                }
-                else{
-                    stack.push(i);
-                }
-            }
-            else if(s.charAt(i) == '('){
+            char c = s.charAt(i);
+            if(c == '('){
                 stack.push(i);
             }
+            else if(c == ')'){
+                if(stack.isEmpty()) emptyClose.add(i);
+                else stack.pop();
+            }
         }
         
+        StringBuilder result = new StringBuilder(s);
+        int n = result.length();
         
-        StringBuilder temp = new StringBuilder(s);
-        
-        while(stack.size() > 0){
-            temp.deleteCharAt(stack.pop());
+        while(!stack.isEmpty()){
+            result.deleteCharAt(stack.pop());
         }
         
-        return temp.toString();
+        for(int i=n-1; i>=0; i--){
+            if(emptyClose.contains(i)) result.deleteCharAt(i);
+        }
+        
+        return result.toString();
+        
+        
+        
+        
         
     }
 }
-
-/*
-
-
-l e e ( t ( c ) o ) d e )
-
-) ( )
-
-) ( )
-
-stack = [3 5 7]
-
-
-*/
