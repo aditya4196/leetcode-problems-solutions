@@ -1,41 +1,36 @@
 class Solution {
     public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
         
-        List<int[]> output = new ArrayList();
+        int i=0, j=0;
+        int n1 = firstList.length, n2 = secondList.length;
+        List<int[]> result = new ArrayList();
         
-        int fptr = 0, sptr = 0;
-        
-        while(fptr < firstList.length && sptr < secondList.length){
-            int fstart = firstList[fptr][0];
-            int fend = firstList[fptr][1];
-            int sstart = secondList[sptr][0];
-            int send = secondList[sptr][1];
+        while(i < n1 && j < n2){
+            int leftMax = Math.max(firstList[i][0], secondList[j][0]);
+            int rightMin = Math.min(firstList[i][1], secondList[j][1]);
             
-            int intStart = Math.max(fstart, sstart);
-            int intEnd = Math.min(fend, send);
-            
-            if(intEnd >= intStart){
-                output.add(new int[]{intStart, intEnd});
+            if(leftMax <= rightMin){
+                result.add(new int[]{leftMax, rightMin});
             }
             
-            if(fend >= send){
-                sptr++;
-            }
-            else fptr++;
+            if(firstList[i][1] >= secondList[j][1]) j++;
+            else i++;
         }
         
-        return output.toArray(new int[output.size()][]);
-        
-        
-        
+        return result.toArray(new int[result.size()][]);
         
     }
 }
 
 /*
 
-[0,2],[5,10],[13,23],[24,25]
-[1,5],[8,12],[15,24],[25,26]
+[[0,2],[5,10],[13,23],[24,25]]
+  
+
+[[1,5],[8,12],[15,24],[25,26]]
+
+
+[]
 
 
 */
