@@ -3,17 +3,21 @@ class Solution {
 
         if(s.length() == 1 || numRows == 1) return s;
         //define no of cols
-        int n = numRows;
-        int diff = 2*(n-2) + 1;
-        int ncols = 0;
-        int i=0;
-        for(i=0; i<s.length(); i++){
-            i+=diff;  
-        }
-        ncols = i;
+        // int n = numRows;
+        // int diff = 2*(n-2) + 1;
+        // int ncols = 0;
+        // int i=0;
+        // for(i=0; i<s.length(); i++){
+        //     i+=diff;  
+        // }
+        // ncols = i;
+        
+        int n = s.length();
+        int sections = (int) Math.ceil(n / (2 * numRows - 2.0));
+        int ncols = sections * (numRows - 1);
 
         char[][] resultMatrix = new char[numRows][ncols];
-        for(i=0; i<numRows; i++){
+        for(int i=0; i<numRows; i++){
             Arrays.fill(resultMatrix[i],'*');
         }
         
