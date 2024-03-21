@@ -1,7 +1,9 @@
 class Solution {
-    List<String> result = new ArrayList();
+    List<String> result;
     Set<String> wordSet;
+    
     public List<String> wordBreak(String s, List<String> wordDict) {
+        result = new ArrayList<String>();
         wordSet = new HashSet<String>(wordDict);
         helper(s, 0, new String());    
         return result;
