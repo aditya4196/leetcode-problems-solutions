@@ -11,55 +11,72 @@
 class Solution {
     public void reorderList(ListNode head) {
         
+        if(head == null || head.next == null || head.next.next == null ) return;
+        boolean isEvenLen = false;
         //get the middle of the list
-        boolean isOddLen = false;
+        
         ListNode fast = head, slow = head;
-        
-        if(head == null || head.next == null || head.next.next == null) return;
-        
         while(fast!=null && fast.next!=null){
             slow = slow.next;
             fast = fast.next.next;
         }
         
-        if(fast != null){
-            slow = slow.next;
-            isOddLen = true;
-        }
+        if(fast == null) isEvenLen = true;
+        else slow = slow.next;
         
-        ListNode back = reverseList(slow);
-        ListNode front = head;
-        ListNode nback = back.next;
-        ListNode nfront = front.next;
+        //get reverse of linkedlist
+        ListNode revhead = reverseHead(slow);
+        ListNode currhead = head;
+        
+        //Reordering
+        ListNode fst = head, sec = revhead;
+        ListNode fstnext = fst.next, secnext = sec.next;
 
         
-        while(back!=null){
-            nfront = front.next;
-            nback = back.next;
-            front.next = back;
-            back.next = nfront;
-            front = nfront;
-            back = nback;
-            if(!isOddLen && back.next == null) break;
-        }
+        while(sec!=null){
+            fstnext = fst.next;
+            secnext = sec.next;
+            fst.next = sec;
+            sec.next = fstnext;
+            fst = fstnext;
+            sec = secnext;
+            if(isEvenLen && sec.next == null) break;
+        } 
         
-        if(isOddLen){
-            front.next = null;
-        }
-
+        if(!isEvenLen) fst.next = null;
+        
     }
     
-    public ListNode reverseList(ListNode head){
-        ListNode prev = null, nextcurr = null;
-        ListNode curr = head;
-        
-        while(curr!=null){
-            nextcurr = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = nextcurr;
-        }
-        
-        return prev;
+    public boolean endCondition(ListNode fstnext, ListNode sec, boolean isEvenLen){
+        if(isEvenLen) return (fstnext != null);
+        else return (sec!=null);
     }
+    
+    public ListNode reverseHead(ListNode head){
+        if(head == null || head.next == null) return head;
+        ListNode newhead = reverseHead(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newhead;
+    }
+    
+    
 }
+
+/*
+
+1 -> 2 <- 3 <- 4
+                   f
+
+1 -> 2
+     f      
+4 -> 5 -> null
+     s
+
+1 -> 4 -> 2
+          f
+3 
+s
+
+
+*/
