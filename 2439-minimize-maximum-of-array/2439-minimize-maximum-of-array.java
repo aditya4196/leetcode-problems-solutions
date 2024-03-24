@@ -1,27 +1,15 @@
 class Solution {
     public int minimizeArrayValue(int[] nums) {
         
-        long maxValue = 0;
-        long currSum = 0;
+        long sum = 0;
+        long maxNum = 0;
         
         for(int i=0; i<nums.length; i++){
-            currSum += nums[i];
-            maxValue = Math.max(maxValue, (long)Math.ceil((double)currSum/(double)(i+1)));
+            sum += nums[i];
+            maxNum = Math.max(maxNum, (long)Math.ceil((double)sum/(i+1)));
         }
-
-        return (int)maxValue;
+        
+        return (int)maxNum;
         
     }
 }
-
-
-/*
-
-[3,7,1,6]
-
-[5,5,1,6]
-
-
-
-
-*/
