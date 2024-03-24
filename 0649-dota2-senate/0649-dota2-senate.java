@@ -1,40 +1,44 @@
 class Solution {
     public String predictPartyVictory(String senate) {
-        
-        int n = senate.length();
         Deque<Integer> rqueue = new LinkedList();
         Deque<Integer> dqueue = new LinkedList();
         
-        for(int i=0; i<n; i++){
-            if(senate.charAt(i) == 'R') rqueue.offer(i);
-            else dqueue.offer(i);
+        for(int i=0; i<senate.length(); i++){
+            if(senate.charAt(i) == 'R'){
+                rqueue.offer(i);
+            }
+            else{
+                dqueue.offer(i);
+            }
         }
-        
+        int n = senate.length();
         
         while(rqueue.size() > 0 && dqueue.size() > 0){
-            if(rqueue.peek() < dqueue.peek()){
-                rqueue.offer(n++);
+            int ridx = rqueue.poll();
+            int didx = dqueue.poll();
+            if(ridx < didx){
+                rqueue.offer(ridx+n);
             }
-            else dqueue.offer(n++);
-            rqueue.poll();
-            dqueue.poll();
+            else dqueue.offer(didx+n);
         }
         
-        return (rqueue.size() == 0)?"Dire":"Radiant";
-     
-
+        return (rqueue.size() > 0)?"Radiant":"Dire";
+       
     }
 }
 
 /*
 
-RDDRRD
-012345
- 
-queueR = {}
-queueD = {7,9,10}
+0123456789
+RDDRDRRDDR
 
 
+
+
+
+
+radiant =
+dire = 
 
 
 
