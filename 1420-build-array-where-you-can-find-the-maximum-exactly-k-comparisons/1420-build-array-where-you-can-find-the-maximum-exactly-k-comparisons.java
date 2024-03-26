@@ -1,31 +1,50 @@
 class Solution {
-    int m, n;
+    int m,n;
     int mod = 1000000007;
     public int numOfArrays(int n, int m, int k) {
-        this.n = n;
         this.m = m;
-        
-        Integer[][][] cache = new Integer[n+1][m+1][k+1];
-        return helper(0, 0, k, cache);
-        
+        this.n = n;
+        Integer[][][] dp = new Integer[n+1][m+1][k+1];
+        return helper(0,0,k,dp);
     }
     
-    public int helper(int idx, int maxNum, int remain, Integer[][][] cache){
-        if(idx == this.n && remain == 0) return 1;
-        if(idx > this.n || remain < 0) return 0;
+    public int helper(int count, int maxSoFar, int cost, Integer[][][] dp){
+        if(count == this.n && cost == 0) return 1;
+        if(count == this.n || cost < 0) return 0;
+
+        if(dp[count][maxSoFar][cost] != null) return dp[count][maxSoFar][cost];
         
-        if(cache[idx][maxNum][remain] != null) return cache[idx][maxNum][remain];
         
         int result = 0;
-        for(int num = 1; num <= maxNum; num++){
-            result = (result + helper(idx+1, maxNum, remain, cache))%mod;
+        
+        for(int i=1; i<=maxSoFar; i++){
+            result = (result + helper(count+1, maxSoFar, cost, dp))%mod;
         }
         
-        for(int num = maxNum+1; num <= this.m; num++){
-            result = (result + helper(idx+1, num, remain-1, cache)) % mod;
+        for(int i=maxSoFar+1; i<=m; i++){
+            result = (result + helper(count+1, i, cost-1, dp))%mod;
         }
         
-        return cache[idx][maxNum][remain] = result;
-        
+        return dp[count][maxSoFar][cost] = result;
     }
 }
+
+/*
+
+ n = 4
+ m = 3
+ k = 0
+            
+                        ()
+
+[1,2,3]
+
+[1,1,1,1]
+[2,1,1,1]
+[3,2,2,2]
+[]
+
+
+
+
+*/
