@@ -1,40 +1,23 @@
 class Solution {
-    int n;
     public int integerBreak(int n) {
-        this.n = n;
         if(n <= 3) return n-1;
-        return recursive(n, new Integer[n+1]);
+        Integer[] dp = new Integer[n+1];
+        return helper(n, dp);
+        
     }
     
-    public int recursive(int target, Integer[] memo){
-        if(target <= 3) return target;
+    public int helper(int n, Integer[] dp){
+        if(n <= 3) return n;
         
-        if(memo[target]!=null) return memo[target];
-        
-        int maxProduct = target;
-        
-        for(int i=2; i<target; i++){
-            int product = i * recursive(target-i, memo);
+        if(dp[n] != null) return dp[n];
+        int maxProduct = n;
+        for(int br = 2; br <= n; br++){
+
+            int product = br*helper(n-br,dp);
             maxProduct = Math.max(maxProduct, product);
+
         }
         
-        return memo[target] = maxProduct;
+        return dp[n] = maxProduct;
     }
 }
-
-/*
-
-weight = 5
-
-target = 1
-
-product = 1
-mp = 1
-
-1 2 3 4
-
-                
-
-
-
-*/
