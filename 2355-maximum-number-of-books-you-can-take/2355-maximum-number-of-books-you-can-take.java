@@ -1,42 +1,80 @@
 class Solution {
     public long maximumBooks(int[] books) {
-        
         int n = books.length;
+        Stack<Integer> stack = new Stack<Integer>();
         
-        //find how far in backward direction can be considered for current to be max
+        int[] leftMinIndex = new int[n];
+        Arrays.fill(leftMinIndex, -1); 
+        
         int[] adjusted = new int[n];
-        for(int i=0; i<n; i++) adjusted[i] = books[i] - i;
-        
-        //find the leftindex of immediate smaller value for current index
-        int[] leftSmaller = new int[n];
-        Arrays.fill(leftSmaller, -1);
-        
-        Deque<Integer> stack = new LinkedList();
+        for(int i=0; i<n; i++){
+            adjusted[i] = books[i] - i;
+        }
         
         for(int i=0; i<n; i++){
             while(!stack.isEmpty() && adjusted[stack.peek()] >= adjusted[i]){
                 stack.pop();
             }
             
-            if(!stack.isEmpty()) leftSmaller[i] = stack.peek();
+            if(!stack.isEmpty()) leftMinIndex[i] = stack.peek();
             stack.push(i);
         }
         
-        long[] dp = new long[n];
+        long[] dp = new long[n+1];
+        long maxBooks = 0;
         
         for(int i=0; i<n; i++){
-            //arithmetic progression sum formula = Sn = (a1 + an)*n/2
-            
-            int an = books[i];
-            int count = Math.min(books[i], i - leftSmaller[i]);
-            int a1 = an - count + 1;
-            long sum = (long)(a1 + an)*count/2;
-            
-            dp[i] = sum + ((leftSmaller[i] == -1)?(0):dp[leftSmaller[i]]);
-            
+            long an = books[i];
+            long count = Math.min(books[i], i - leftMinIndex[i]);
+            long a1 = books[i] - count + 1;
+            long sum = (an + a1)*count/2;
+            dp[i] = sum + ((leftMinIndex[i] == -1)?0:(dp[leftMinIndex[i]]));
+            maxBooks = Math.max(maxBooks, dp[i]);
         }
         
-        return Arrays.stream(dp).max().getAsLong();
+        return maxBooks;
+        
+        
+        
+        
+        
         
     }
 }
+
+/*
+
+ 0 1 2 3 4
+[8,5,4,3,4]
+
+[8,4,0,4,5]
+   i
+ 
+stack = [8] 
+
+
+
+
+
+
+
+   i
+[8,0,0,0,0]
+ 
+stack = [0] 
+ 
+
+arithmetic sum = 
+a1 = 4
+an = 5
+n = 
+
+
+
+
+
+
+
+
+
+*/
