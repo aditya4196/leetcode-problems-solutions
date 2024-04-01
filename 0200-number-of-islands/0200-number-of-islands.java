@@ -1,27 +1,35 @@
 class Solution {
+    int m,n;
     public int numIslands(char[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        int count = 0;
+        m = grid.length;
+        n = grid[0].length;
+        
+        boolean[][] visited = new boolean[m][n];
+        int islandCount = 0;
         
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
-                if(grid[i][j] == '1'){
-                    dfs(grid, i, j);
-                    count++;
+                if(grid[i][j] == '1' && !visited[i][j]){
+                    dfs(grid, i, j, visited);
+                    islandCount++;
                 }
             }
         }
-        
-        return count;
+        return islandCount;
     }
     
-    public void dfs(char[][] grid, int i, int j){
-        if(i<0 || j<0 || i>=grid.length || j>=grid[0].length || grid[i][j] == '0') return;
+    public void dfs(char[][] grid, int row, int col, boolean[][] visited){
+        if(!isValidBounds(row, col) || visited[row][col] || grid[row][col] == '0') return;
         
-        grid[i][j] = '0';
-        dfs(grid, i-1, j);
-        dfs(grid, i+1, j);
-        dfs(grid, i, j-1);
-        dfs(grid, i, j+1);
+        visited[row][col] = true;
+        dfs(grid, row-1, col, visited);
+        dfs(grid, row+1, col, visited);
+        dfs(grid, row, col-1, visited);
+        dfs(grid, row, col+1, visited);
+        
+    }
+    
+    public boolean isValidBounds(int row, int col){
+        return row >= 0 && col >= 0 && row < m && col < n;
     }
 }
