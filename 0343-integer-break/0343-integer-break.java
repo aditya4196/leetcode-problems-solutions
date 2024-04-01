@@ -1,8 +1,8 @@
 class Solution {
     public int integerBreak(int n) {
+        
         if(n <= 3) return n-1;
-        Integer[] dp = new Integer[n+1];
-        return helper(n, dp);
+        else return helper(n, new Integer[n+1]);
         
     }
     
@@ -10,14 +10,14 @@ class Solution {
         if(n <= 3) return n;
         
         if(dp[n] != null) return dp[n];
-        int maxProduct = n;
-        for(int br = 2; br <= n; br++){
-
-            int product = br*helper(n-br,dp);
+        int maxProduct = Integer.MIN_VALUE;
+        
+        for(int i=2; i<=n; i++){
+            int product = i*helper(n-i, dp);
             maxProduct = Math.max(maxProduct, product);
-
         }
         
-        return dp[n] = maxProduct;
+        
+        return dp[n] = (maxProduct == Integer.MIN_VALUE)?-1:maxProduct;
     }
 }
