@@ -1,65 +1,52 @@
 class Solution {
-
-  private Set<String> validExpressions = new HashSet<String>();
-
-  private void recurse(
-      String s,
-      int index,
-      int leftCount,
-      int rightCount,
-      StringBuilder expression) {
-
-    if (index == s.length()) {
-
-      if (leftCount == rightCount) {
-          this.validExpressions.add(expression.toString());
+    Set<String> set;
+    public List<String> removeInvalidParentheses(String s) {
+        set = new HashSet<String>();
+        helper(s, 0, 0, 0, new StringBuilder());
+        
+        int minRemoved = Integer.MIN_VALUE;
+        for(String str : set){
+            minRemoved = Math.max(minRemoved, str.length());
         }
-      }
-      
-      else {
-
-      char currentCharacter = s.charAt(index);
-      int length = expression.length();
-
-      if (currentCharacter != '(' && currentCharacter != ')') {
-        expression.append(currentCharacter);
-        this.recurse(s, index + 1, leftCount, rightCount, expression);
-        expression.deleteCharAt(length);
-      } else {
-
-        this.recurse(s, index + 1, leftCount, rightCount, expression);
-        expression.append(currentCharacter);
-
-        if (currentCharacter == '(') {
-          this.recurse(s, index + 1, leftCount + 1, rightCount, expression);
-        } else if (rightCount < leftCount) {
-
-          this.recurse(s, index + 1, leftCount, rightCount + 1, expression);
+        
+        List<String> result = new ArrayList();
+        for(String str : set){
+            if(minRemoved == str.length()){
+                result.add(str);
+            }
         }
-
-        // Undoing the append operation for other recursions.
-        expression.deleteCharAt(length);
-      }
+        
+        return result;
+        
     }
-  }
-
-  public List<String> removeInvalidParentheses(String s) {
-      this.recurse(s, 0, 0, 0, new StringBuilder());
-      
-      int minLength = Integer.MIN_VALUE;
-      
-      for(String str : this.validExpressions){
-          minLength = Math.max(minLength, str.length());
-      }
-      
-      List<String> output = new ArrayList<String>();
-      for(String str : this.validExpressions){
-          if(minLength == str.length()){
-              output.add(str);
-          }
-      }
-      
-      
-      return output;
-  }
+    
+    public void helper(String s, int idx, int left, int right, StringBuilder str){
+        if(idx == s.length()){
+            if(left == right){
+                set.add(str.toString());
+            }
+            return;
+        }
+        
+        if(s.charAt(idx) != '(' && s.charAt(idx) != ')'){
+            str.append(s.charAt(idx));
+            helper(s, idx+1, left, right, str);
+            str.deleteCharAt(str.length()-1);
+        }
+        else{
+            helper(s, idx+1, left, right, str);
+            str.append(s.charAt(idx));
+            
+            if(s.charAt(idx) != '('){
+                helper(s, idx+1, left+1, right, str);
+            }
+            else{
+                if(left <= right){
+                  helper(s, idx+1, left, right+1, str);                   
+                }
+            }
+            str.deleteCharAt(str.length()-1);
+        }
+         
+    }
 }
