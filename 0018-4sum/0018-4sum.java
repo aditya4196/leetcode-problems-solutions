@@ -36,7 +36,7 @@ class Solution {
                 quad.remove(quad.size()-1);
                 quad.remove(quad.size()-1);
                 left++;
-                
+                right--;
                 while(left < right && nums[left] == nums[left-1]) left++;
             }
             else if(sum > target){
