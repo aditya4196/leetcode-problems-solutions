@@ -1,77 +1,53 @@
 class Solution {
     public List<String> mostVisitedPattern(String[] username, int[] timestamp, String[] website) {
-        HashMap<String, ArrayList<Pair<String, Integer>>> userMap = new HashMap();
-        int n = username.length;
         
-        for(int i=0; i<n; i++){
-            userMap.computeIfAbsent(username[i], k -> new ArrayList<Pair<String, Integer>>()).add(new Pair<>(website[i], timestamp[i]));
+        Map<String, List<Pair<String, Integer>>> userMap = new HashMap();
+        Map<String, Integer> patternMap = new HashMap();
+        
+        for(int i=0; i<username.length; i++){
+            userMap.computeIfAbsent(username[i], k-> new ArrayList<Pair<String, Integer>>())
+                .add(new Pair<String, Integer>(website[i], timestamp[i]));
         }
         
-        HashMap<String, Integer> tripletMap = new HashMap();
+        HashSet<String> patternSet;
         
-        for(ArrayList<Pair<String,Integer>> list : userMap.values()){
+        for(List<Pair<String, Integer>> list : userMap.values()){
+            Collections.sort(list, (a,b) -> (Integer.compare(a.getValue(),b.getValue())));
+            int n = list.size();
             
-            Collections.sort(list, (a,b) -> (a.getValue() - b.getValue()));
-            Set<String> patterndups = new HashSet();
-            int m = list.size();
-            
-            for(int i=0; i<m-2; i++){
-                for(int j=i+1; j<m-1; j++){
-                    for(int k = j+1; k<m; k++){    
+            patternSet = new HashSet<String>();
+            for(int i=0; i<=(n-3); i++){
+                for(int j=i+1; j<=(n-2); j++){
+                    for(int k=j+1; k<=(n-1); k++){
+                        
                         String pattern = list.get(i).getKey() + "-" + list.get(j).getKey() + "-" + list.get(k).getKey();
-                        if(patterndups.contains(pattern)) continue;
-                        tripletMap.put(pattern, tripletMap.getOrDefault(pattern,0)+1);
-                        patterndups.add(pattern);
+                        if(patternSet.contains(pattern)) continue;
+                        patternMap.put(pattern, patternMap.getOrDefault(pattern,0)+1);
+                        patternSet.add(pattern);
                     }
-                    
                 }
-            }
-            
-        }
-        
-        String largestPattern = "";
-        int maxCount = 0;
-        
-        
-        for(String pattern : tripletMap.keySet()){
-            System.out.println(pattern + " : " + tripletMap.get(pattern));
-            if(maxCount < tripletMap.get(pattern)){
-                maxCount = tripletMap.get(pattern);
-                largestPattern = pattern;
-            }
-            else if(maxCount == tripletMap.get(pattern)){
-                if(largestPattern.compareTo(pattern) > 0){
-                    largestPattern = pattern;
-                }
-            }
-        }
-        
-        return Arrays.asList(largestPattern.split("-"));
 
+            }
+        }
         
+        int maxScorePattern = 0;
+        String result = "";
         
+        for(String pattern : patternMap.keySet()){
+            int score = patternMap.get(pattern);
+                        
+            if(score > maxScorePattern){
+                maxScorePattern = score;
+                result = pattern;
+            }
+            else if(score == maxScorePattern){
+                if(result.compareTo(pattern) > 0){
+                    result = pattern;
+                }
+            }
+        }
         
-        
-        
+        return Arrays.asList(result.split("-"));
         
     }
 }
-
-/*
-
-["home","about","career","home","cart","maps","home","home","about","career"]
-   1.     1.      1.       1,2.   2.     2.    1,2.                
-        
-h - ()
-
-user -> List(website,timestamp)
-sort list based on timestamps
-
-
-map(string, integer)
-
-
-
-
-
-*/
