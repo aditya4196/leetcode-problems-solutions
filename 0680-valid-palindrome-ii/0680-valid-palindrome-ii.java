@@ -1,19 +1,27 @@
 class Solution {
     public boolean validPalindrome(String s) {
-        return isPalindrome(s, 0, s.length()-1, 0);
+        return helper(s, 0, s.length()-1, 0);
     }
     
-    public boolean isPalindrome(String s, int i, int j, int deleteCount){
+    public boolean helper(String s, int left, int right, int removed){
+        if(removed > 1) return false;
         
-        if(deleteCount == 2) return false;
+        if(left >= right) return true;
         
-        if(i>=j) return true;
-        
-        if(s.charAt(i) == s.charAt(j)){
-            return isPalindrome(s, i+1, j-1, deleteCount);   
+        if(s.charAt(left) == s.charAt(right)){
+            return helper(s, left+1, right-1, removed);
         }
-        else{
-            return isPalindrome(s, i+1, j, deleteCount+1) || isPalindrome(s, i, j-1, deleteCount+1); 
-        }
+        else return helper(s, left+1, right, removed+1) || helper(s, left, right-1, removed+1);
     }
 }
+
+/*
+"aba"
+ i
+  j
+
+
+
+
+
+*/
