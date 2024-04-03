@@ -1,16 +1,22 @@
 class Solution {
     public void sortColors(int[] nums) {
-        int n = nums.length;
-        int i=0, j=n-1;
-        int pivot = 0;
         
-        while(pivot <= j){
-            if(nums[pivot] == 0) swap(nums, pivot++, i++);
-            else if(nums[pivot] == 2) swap(nums, pivot, j--);
-            else{
+        int lptr = 0, rptr = nums.length-1, pivot = 0;
+        
+        while(pivot <= rptr){
+            if(nums[pivot] == 0){
+                swap(nums, pivot, lptr);
                 pivot++;
+                lptr++;
             }
-        }  
+            else if(nums[pivot] == 2){
+                swap(nums, pivot, rptr);
+                rptr--;
+            }
+            else pivot++;
+        }
+        
+        
     }
     
     public void swap(int[] nums, int i, int j){
@@ -22,12 +28,10 @@ class Solution {
 
 /*
 
- [0,1,2]
-    i
-      j
-      
-      p
-
+[0,0,0,1,2,2]
+     i
+         j
+       p
 
 
 
