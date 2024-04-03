@@ -1,39 +1,33 @@
 class Solution {
     public boolean backspaceCompare(String s, String t) {
         
-        int i=s.length()-1, j=t.length()-1;
-        int sb = 0, tb = 0;
+        int scount = 0, tcount = 0;
+        int sptr = s.length()-1, tptr = t.length()-1;
         
-        while(i>=0 || j>=0){
-            
-            while(i>=0){
-                if(s.charAt(i) == '#'){
-                    sb++;
-                    i--;
-                }
-                else if(sb>0){
-                    sb--;
-                    i--;
-                }
+        while(sptr >= 0 || tptr >= 0){
+            while(sptr >= 0){
+                if(s.charAt(sptr) == '#') scount++;
+                else if(scount > 0) scount--;
                 else break;
+                sptr--;
             }
+        
+            while(tptr >= 0){
+                if(t.charAt(tptr) == '#') tcount++;
+                else if(tcount > 0) tcount--;
+                else break;
+                tptr--;
+                
+            }
+            
 
-            while(j>=0){
-                if(t.charAt(j) == '#'){
-                    tb++;
-                    j--;
-                }
-                else if(tb>0){
-                    tb--;
-                    j--;
-                }
-                else break;
-            }
-            
-            if(i>=0 && j>=0 && s.charAt(i) != t.charAt(j)) return false;
-            if((i>=0 != j>=0)) return false;
-            i--;j--;
+            if(tptr >= 0 && sptr >= 0 && t.charAt(tptr) != s.charAt(sptr)) return false;
+            if(tptr >= 0 != sptr >= 0) return false;
+            tptr--;
+            sptr--;
+
         }
+        
         return true;
         
     }
@@ -41,13 +35,12 @@ class Solution {
 
 /*
 
- c 
-i
-sl = 0
-
-d#c
- j
-sl = 0
-
+a#c 
+  i
+  
+scount = 0
+cd#
+  j
+tcount = 0
 
 */
