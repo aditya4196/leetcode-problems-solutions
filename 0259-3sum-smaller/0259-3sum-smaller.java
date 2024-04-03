@@ -2,25 +2,26 @@ class Solution {
     public int threeSumSmaller(int[] nums, int target) {
         
         Arrays.sort(nums);
-        int triplets = 0, n = nums.length;
+        int count = 0;
         
-        for(int i=0; i<n-2; i++){
-            int j=i+1, k=n-1;
+        for(int i=0; i<nums.length-2; i++){
+            //if(i > 0 && nums[i] == nums[i-1]) continue;
+        
+            int left = i+1, right = nums.length-1;
             
-            while(j < k){
-                int sum = nums[i] + nums[j] + nums[k];
-                
+            while(left < right){
+                int sum = nums[i] + nums[left] + nums[right];
                 if(sum < target){
-                    triplets += (k-j);
-                    j++;
+                    count += (right-left);
+                    left++;
                 }
-                else k--;
-                
+                else right--;
             }
+            
         }
         
-        return triplets;
+        return count;
+        
         
     }
 }
-
