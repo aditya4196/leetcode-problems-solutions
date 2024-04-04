@@ -1,23 +1,17 @@
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         
-        int ptr1 = m-1, ptr2 = n-1;
+        int n1ptr = m-1, n2ptr = n-1, k = m+n-1;
         
-        for(int rptr = (m+n-1); rptr >= 0; rptr--){
-            if(ptr1 >= 0 && ptr2 >= 0){
-                nums1[rptr] = (nums1[ptr1] > nums2[ptr2])?(nums1[ptr1--]):(nums2[ptr2--]);
+        while(n1ptr >= 0 || n2ptr >= 0){
+            int leftVal = (n1ptr < 0)?Integer.MIN_VALUE:nums1[n1ptr];
+            int rightVal = (n2ptr < 0)?Integer.MIN_VALUE:nums2[n2ptr];
+            
+            if(leftVal > rightVal){
+                nums1[k--] = nums1[n1ptr--];
             }
-            else nums1[rptr] = (ptr1 < 0)?(nums2[ptr2--]):(nums1[ptr1--]);
+            else nums1[k--] = nums2[n2ptr--];
         }
         
     }
 }
-/*
-
-
-nums1 = [1 2 3 3 5 6]
-         i
-nums2 = [2 5 6]
-         j
-
-*/
