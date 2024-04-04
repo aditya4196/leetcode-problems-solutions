@@ -1,27 +1,31 @@
 class Solution {
     public void nextPermutation(int[] nums) {
-        int n = nums.length;
-        int pivot = n-2;
         
-        while(pivot >= 0 && nums[pivot] >= nums[pivot+1]) pivot--;
+        int idx = nums.length-1;
         
-        if(pivot == -1){
-            reverse(nums,0,n-1);
-        }
-        else{
-          reverse(nums, pivot+1, n-1);
-          int j = pivot+1;
-          while(j<n && nums[j] <= nums[pivot]) j++;
-          swap(nums, pivot, j);
+        while(idx > 0 && nums[idx] <= nums[idx-1]){
+            idx--;
         }
         
+        if(idx == 0){
+            reverse(nums, 0, nums.length-1);
+            return;
+        }
+        int prev = idx-1;
         
+        reverse(nums, idx, nums.length-1);
         
+        int nextptr = prev+1;
+        while(nextptr < nums.length && nums[nextptr] <= nums[prev]) nextptr++;
+        
+        swap(nums, nextptr, prev);        
     }
     
     public void reverse(int[] nums, int i, int j){
         while(i < j){
-            swap(nums, i++, j--);
+            swap(nums, i, j);
+            i++;
+            j--;
         }
     }
     
@@ -34,8 +38,11 @@ class Solution {
 
 /*
 
+[3,4,5,2,1]
+[3,5,1,2,4]
 
-1 2 5 4 3 0 
+
+
 
 
 
