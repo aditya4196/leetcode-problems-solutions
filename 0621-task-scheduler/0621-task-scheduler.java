@@ -14,7 +14,7 @@ class Solution {
             List<Integer> placed = new ArrayList<Integer>();
             int cycle = n+1;
             
-            for(int i=0; i<cycle; i++){
+            for(int i=1; i<=cycle; i++){
                 if(pq.size() > 0){
                     placed.add(pq.poll());
                 }
