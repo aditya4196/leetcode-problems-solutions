@@ -15,18 +15,19 @@
  */
 class Solution {
     public boolean isValidBST(TreeNode root) {
+        
+        Stack<TreeNode> stack = new Stack();
         TreeNode prev = null;
-        Deque<TreeNode> stack = new LinkedList();
         TreeNode curr = root;
         
-        while(curr!=null || !stack.isEmpty()){
+        while(!stack.isEmpty() || curr!=null){
             while(curr!=null){
                 stack.push(curr);
                 curr = curr.left;
             }
             
             curr = stack.pop();
-            if(prev!=null && prev.val >= curr.val) return false;
+            if(prev != null && curr.val <= prev.val) return false;
             prev = curr;
             curr = curr.right;
         }
@@ -34,5 +35,15 @@ class Solution {
         return true;
         
     }
-    
 }
+
+/*
+
+                5
+            1.     4
+                3.    6
+
+
+
+
+*/
