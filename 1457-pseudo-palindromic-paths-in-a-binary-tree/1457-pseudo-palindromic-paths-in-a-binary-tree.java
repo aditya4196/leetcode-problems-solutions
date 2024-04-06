@@ -14,41 +14,28 @@
  * }
  */
 class Solution {
+    private int result;
+    
     public int pseudoPalindromicPaths (TreeNode root) {
-        return traverse(root, new int[10]);
+        result = 0;
+        Set<Integer> set = new HashSet<Integer>();
+        helper(root, set);
+        return result;
+        
     }
     
-    public int traverse(TreeNode root, int[] freq){
-        if(root == null) return 0;
-        if(root.left == null && root.right == null){
-           freq[root.val]++;
-           int count = checkPalindrome(freq)?1:0;
-           freq[root.val]--;
-           return count;
+    public void helper(TreeNode curr, Set<Integer> set){
+        if(curr == null) return;
+        
+        if(set.contains(curr.val)) set.remove(curr.val);
+        else set.add(curr.val);
+        
+        if(curr.left == null && curr.right == null)
+        {
+            if(set.size() <= 1) result += 1;
         }
         
-        freq[root.val]++;
-        int count = traverse(root.left, freq) + traverse(root.right, freq);
-        freq[root.val]--;
-        return count;
-    }
-    
-    public boolean checkPalindrome(int[] freq){
-        int oddCount = 0;
-        for(int i=1; i<=9; i++){
-            if(freq[i]%2 != 0){
-                if(oddCount == 1) return false;
-                else oddCount++;
-            }
-        }
-        return true;
-        
-
+        helper(curr.left, new HashSet<Integer>(set));
+        helper(curr.right, new HashSet<Integer>(set));
     }
 }
-
-/*
-
-2,2,2,3,3,3
-
-*/
