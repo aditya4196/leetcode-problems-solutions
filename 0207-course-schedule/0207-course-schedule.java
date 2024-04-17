@@ -1,47 +1,35 @@
 class Solution {
-    
-    Integer[] startTime;
-    Integer[] endTime;
-    int time;
-    
-    
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        startTime = new Integer[numCourses];
-        endTime = new Integer[numCourses];
-        time = 1;
         
         List<Integer>[] adjlist = new ArrayList[numCourses];
+        
         for(int i=0; i<numCourses; i++){
             adjlist[i] = new ArrayList<Integer>();
         }
+        
+        int[] indegree = new int[numCourses];
+        
         for(int[] preq : prerequisites){
             adjlist[preq[1]].add(preq[0]);
+            indegree[preq[0]]++;
         }
         
-        boolean[] visited = new boolean[numCourses];
+        Deque<Integer> queue = new LinkedList();
         for(int i=0; i<numCourses; i++){
-            if(!visited[i] && dfs(adjlist, i, visited)) return false;
+            if(indegree[i] == 0) queue.offer(i);
         }
-        return true;
-    }
-    
-    public boolean dfs(List<Integer>[] adjlist, int curr, boolean[] visited){
-        visited[curr] = true;
-        startTime[curr] = time++;
+        int coursesCompleted = 0;
         
-        for(int next : adjlist[curr]){
-            if(visited[next] && endTime[next] == null) return true;
-            if(!visited[next] && dfs(adjlist, next, visited)) return true;
+        while(queue.size() > 0){
+            int curr = queue.poll();
+            coursesCompleted++;
+            
+            for(int nextCourse : adjlist[curr]){
+                if(--indegree[nextCourse] == 0) queue.offer(nextCourse);
+            }
         }
         
-        endTime[curr] = time++; 
-        return false;
+        return coursesCompleted == numCourses;
+        
     }
-    
-    
-    
-    
-    
-    
-    
 }
