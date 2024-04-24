@@ -1,33 +1,40 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
-        int low = Integer.MAX_VALUE;
-        int high = Integer.MIN_VALUE;
-
-        for (int num : nums) {
-            low = Math.min(low, num);
-            high = Math.max(high, num);
+        
+        int maxbucketSize = Integer.MIN_VALUE, minbucketSize = Integer.MAX_VALUE;
+        Map<Integer,Integer> bucketMap = new HashMap();
+        
+        for(int num : nums){
+            maxbucketSize = Math.max(maxbucketSize, num);
+            minbucketSize = Math.min(minbucketSize, num);
+            bucketMap.put(num, bucketMap.getOrDefault(num,0)+1);
         }
-
-        int target = nums.length - k + 1;
-        while (low < high) {
-            int mid = low + (high - low) / 2;
-            if (countNumberLessThan(nums, mid) < target) {
-                low = mid + 1;
-            } else {
-                high = mid;
-            }
+        
+        int traversed = 0;
+        for(int bucket = maxbucketSize; bucket>=minbucketSize; bucket--){
+            
+            int currCount = bucketMap.getOrDefault(bucket,-1);
+            if(currCount == -1) continue;
+            
+            traversed += currCount;
+            if(traversed >= k) return bucket;
         }
-
-        return low;
-    }
-    
-    private static int countNumberLessThan(int[] array, int mid) {
-        int count = 0;
-        for (int num : array) {
-            if (num <= mid) {
-                count++;
-            }
-        }
-        return count;
+        
+        return -1;
+        
     }
 }
+
+/*
+
+1,2,2,3,3,4,5,5,6
+
+max number = 6
+
+1 2 3 4 5 6
+1 2 2 1 2 1
+
+
+
+
+*/
