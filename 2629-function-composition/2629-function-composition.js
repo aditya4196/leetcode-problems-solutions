@@ -3,15 +3,11 @@
  * @return {Function}
  */
 var compose = function(functions) {
-    
-    return function(x){
-        
-        for(let i=functions.length-1; i>=0; i--){
-            x = functions[i](x);
-        }        
-        return x;
-    }
 
+        return function(x){
+            const result = functions.reverse().reduce((a,func) => func(a),x);
+            return result;
+        }
 };
 
 /**
