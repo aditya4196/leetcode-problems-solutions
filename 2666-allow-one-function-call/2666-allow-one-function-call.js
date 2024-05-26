@@ -8,7 +8,7 @@ var once = function(fn) {
     return function(...args){
      if(!this.isCalled){
          this.isCalled = true;
-         return fn.apply(this,args);
+         return fn.apply(null,args);
      } 
     }
 };
