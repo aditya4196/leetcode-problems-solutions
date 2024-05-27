@@ -5,7 +5,10 @@
  */
 var addTwoPromises = async function(promise1, promise2) {
     try{
-        return await promise1 + await promise2;
+        let sum = 0;
+        sum += await promise1;
+        sum += await promise2;
+        return sum;
     }
     catch(error){
         console.error(error);
