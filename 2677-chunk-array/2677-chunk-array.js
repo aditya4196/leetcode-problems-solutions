@@ -5,15 +5,11 @@
  */
 var chunk = function(arr, size) {
     const chunked = [];
-    let i=0;
-    
-    for(i=0; i<arr.length; i+=size){
+
+    for(let i=0; i<arr.length; i+=size){
         chunked.push(arr.slice(i, i+size));
     }
-    
-//     if(arr.length%size != 0){
-//         chunked.push(arr.slice(i));
-//     }
+
     
     return chunked;
     
